@@ -8,7 +8,8 @@ class BibliotecaAppTest {
 
     @Test
     public void shouldDisplayGreetingMessageWhenTheApplicationStarts() {
-        assertEquals("Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!", BibliotecaApp.greeting());
+        String expectedGreeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
+        assertEquals(expectedGreeting, BibliotecaApp.greeting());
     }
 
 }
