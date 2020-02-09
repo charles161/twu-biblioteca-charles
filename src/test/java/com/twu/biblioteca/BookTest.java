@@ -2,16 +2,21 @@ package com.twu.biblioteca;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BookTest {
     @Test
-    void shouldReturnThePropertiesOfABookSeparatedByPipesWithSerialNumber() {
+    void shouldReturnThePropertiesOfABookSeparatedByPipes() {
         Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
 
-        String expectedString = "1 | Sherlock Holmes | Sir Arthur Conan Doyle | 1999\n";
-        assertEquals(expectedString, Book.buildList(Collections.singletonList(book)));
+        String bookDetail = "Sherlock Holmes | Sir Arthur Conan Doyle | 1999";
+        List<String> bookList = new ArrayList<>();
+        bookList.add(bookDetail);
+
+        assertEquals(bookList, Book.buildList(Collections.singletonList(book)));
     }
 }

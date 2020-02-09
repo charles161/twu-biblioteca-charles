@@ -3,86 +3,91 @@ package com.twu.biblioteca;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class BibliotecaAppTest {
 
-    String expectedGreeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
-    String expectedMenu = "Menu: (Type the corresponding number to select)\n\n1. List of books\n";
-    String expectedBookList = "Books Available:\n\n" +
-            "S.no | Book Name | Author | Year of Publication\n" +
-            "1 | Old man and the sea | Earnest Hemingway | 2012\n" +
-            "2 | To Kill A Mocking Bird | Harper Collins | 2013\n";
-    String expectedExceptionMessage = "Please select a valid option!\n";
+    private static final String GREETING_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
+    private static final String ERROR_MESSAGE = "Please select a valid option!";
+    private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
+    private static final String BOOK_LIST_TITLE = "Books Available:";
+    private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
+    private static final String MENU_OPTION_1 = "1. List of books";
+    Printer printer = mock(Printer.class);
+    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer);
+
 
     @Test
-    public void shouldDisplayGreetingMessageWhenTheApplicationStarts() {
-        assertEquals(expectedGreeting, BibliotecaApp.greeting());
-    }
+    void shouldDisplayGreetingMessageWhenTheApplicationStarts() {
 
-    @Test
-    public void shouldDisplayAuthorAndYearOfPublicationInTheBookList() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
+        bibliotecaApp.displayGreeting();
 
-        BibliotecaApp.viewBookList();
-
-        assertEquals(expectedBookList, outContent.toString());
+        verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
     }
 
     @Test
     public void shouldDisplayTheMenuAfterTheGreeting() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
 
-        BibliotecaApp.menu();
+        bibliotecaApp.displayGreeting();
+        bibliotecaApp.displayMenu();
 
-        assertEquals(expectedMenu, outContent.toString());
+        verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
+        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Collections.singletonList(MENU_OPTION_1));
     }
 
     @Test
     public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
         int userInput = 1;
-        InputStream in = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
-        String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedBookList;
+        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
+        Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
+        Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book1);
+        bookList.add(book2);
+        List<String> bookDetails = Book.buildList(bookList);
 
-        System.setIn(in);
-        BibliotecaApp.main(new String[]{});
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
 
-        assertEquals(expectedOutput, outContent.toString());
+        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
     }
 
     @Test
-    void shouldNotifyUserWhenAnInvalidOption2IsSelected() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
+    public void shouldNotifyUserWhenAnInvalidOption2IsSelected() {
         int userInput = 2;
-        InputStream in = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
-        String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedExceptionMessage;
+        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
-        System.setIn(in);
-        BibliotecaApp.main(new String[]{});
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
 
-        assertEquals(expectedOutput, outContent.toString());
+        verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
     }
 
     @Test
-    void shouldNotifyUserWhenAnInvalidOption3IsSelected() {
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
+    public void shouldNotifyUserWhenAnInvalidOption3IsSelected() {
         int userInput = 3;
-        InputStream in = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
-        String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedExceptionMessage;
+        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
-        System.setIn(in);
-        BibliotecaApp.main(new String[]{});
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
 
-        assertEquals(expectedOutput, outContent.toString());
+        verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
     }
+
+    @Test
+    public void shouldNotifyUserWhenAnInvalidOption4IsSelected() {
+        int userInput = 4;
+        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
+
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
+    }
+
 }

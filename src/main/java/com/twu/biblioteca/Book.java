@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Book {
@@ -14,16 +15,15 @@ public class Book {
         this.yearOfPublication = yearOfPublication;
     }
 
-    public static String buildList(List<Book> bookList) {
-        StringBuilder outputString = new StringBuilder();
-        int serial = 0;
+    public static List<String> buildList(List<Book> bookList) {
+        List<String> bookListString = new ArrayList<>();
         for (Book book : bookList) {
-            outputString.append(++serial + " | " + columnedProperties(book));
+            bookListString.add(columnedProperties(book));
         }
-        return outputString.toString();
+        return bookListString;
     }
 
     private static String columnedProperties(Book book) {
-        return book.name + " | " + book.author + " | " + book.yearOfPublication + "\n";
+        return book.name + " | " + book.author + " | " + book.yearOfPublication;
     }
 }
