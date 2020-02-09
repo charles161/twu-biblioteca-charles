@@ -22,10 +22,7 @@ public class BibliotecaApp {
         List<Book> bookList = new ArrayList<>();
         bookList.add(book1);
         bookList.add(book2);
-        int serial = 0;
-        for (Book book : bookList) {
-            System.out.println(++serial + " | " + book.columnedProperties());
-        }
+        System.out.print(Book.buildList(bookList));
     }
 
     public static String greeting() {

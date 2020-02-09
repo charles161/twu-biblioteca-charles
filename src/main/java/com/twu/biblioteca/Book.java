@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import java.util.List;
+
 public class Book {
 
     private final String name;
@@ -12,7 +14,16 @@ public class Book {
         this.yearOfPublication = yearOfPublication;
     }
 
-    public String columnedProperties() {
-        return name + " | " + author + " | " + yearOfPublication;
+    public static String buildList(List<Book> bookList) {
+        StringBuilder outputString = new StringBuilder();
+        int serial = 0;
+        for (Book book : bookList) {
+            outputString.append(++serial + " | " + columnedProperties(book));
+        }
+        return outputString.toString();
+    }
+
+    private static String columnedProperties(Book book) {
+        return book.name + " | " + book.author + " | " + book.yearOfPublication + "\n";
     }
 }
