@@ -16,14 +16,14 @@ public class BibliotecaApp {
     private static void viewBookList() {
         System.out.println("Books Available:");
         System.out.println();
-        String book1 = "Old man and the sea";
-        String book2 = "To kill a mocking bird";
+        System.out.println("S.no | Book Name | Author | Year of Publication");
+        String book1 = "1 | Old man and the sea | Earnest Hemingway | 2012";
+        String book2 = "2 | To Kill A Mocking Bird | Harper Collins | 2013";
         List<String> bookList = new ArrayList<>();
         bookList.add(book1);
         bookList.add(book2);
-        int serial = 0;
         for (String book : bookList) {
-            System.out.println(++serial + ". " + book);
+            System.out.println(book);
         }
     }
 
