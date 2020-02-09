@@ -17,6 +17,8 @@ public class BibliotecaApp {
         int menuOption = scanner.nextInt();
         if (menuOption == 1) {
             viewBookList();
+        } else {
+            System.out.println("Please select a valid option!");
         }
     }
 

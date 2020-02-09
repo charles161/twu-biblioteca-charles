@@ -17,6 +17,7 @@ class BibliotecaAppTest {
             "S.no | Book Name | Author | Year of Publication\n" +
             "1 | Old man and the sea | Earnest Hemingway | 2012\n" +
             "2 | To Kill A Mocking Bird | Harper Collins | 2013\n";
+    String expectedExceptionMessage = "Please select a valid option!\n";
 
     @Test
     public void shouldDisplayGreetingMessageWhenTheApplicationStarts() {
@@ -47,8 +48,8 @@ class BibliotecaAppTest {
     public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        int input = 1;
-        InputStream in = new ByteArrayInputStream(Integer.toString(input).getBytes());
+        int userInput = 1;
+        InputStream in = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
         String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedBookList;
 
         System.setIn(in);
@@ -57,4 +58,31 @@ class BibliotecaAppTest {
         assertEquals(expectedOutput, outContent.toString());
     }
 
+    @Test
+    void shouldNotifyUserWhenAnInvalidOption2IsSelected() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        int userInput = 2;
+        InputStream in = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
+        String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedExceptionMessage;
+
+        System.setIn(in);
+        BibliotecaApp.main(new String[]{});
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
+
+    @Test
+    void shouldNotifyUserWhenAnInvalidOption3IsSelected() {
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        int userInput = 3;
+        InputStream in = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
+        String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedExceptionMessage;
+
+        System.setIn(in);
+        BibliotecaApp.main(new String[]{});
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }
