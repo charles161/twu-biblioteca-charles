@@ -11,10 +11,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BibliotecaAppTest {
 
+    String expectedGreeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
+    String expectedMenu = "Menu: (Type the corresponding number to select)\n\n1. List of books\n";
+    String expectedBookList = "Books Available:\n\n" +
+            "S.no | Book Name | Author | Year of Publication\n" +
+            "1 | Old man and the sea | Earnest Hemingway | 2012\n" +
+            "2 | To Kill A Mocking Bird | Harper Collins | 2013\n";
+
     @Test
     public void shouldDisplayGreetingMessageWhenTheApplicationStarts() {
-        String expectedGreeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
-
         assertEquals(expectedGreeting, BibliotecaApp.greeting());
     }
 
@@ -22,10 +27,6 @@ class BibliotecaAppTest {
     public void shouldDisplayAuthorAndYearOfPublicationInTheBookList() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        String expectedBookList = "Books Available:\n\n" +
-                "S.no | Book Name | Author | Year of Publication\n" +
-                "1 | Old man and the sea | Earnest Hemingway | 2012\n" +
-                "2 | To Kill A Mocking Bird | Harper Collins | 2013\n";
 
         BibliotecaApp.viewBookList();
 
@@ -36,7 +37,6 @@ class BibliotecaAppTest {
     public void shouldDisplayTheMenuAfterTheGreeting() {
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        String expectedMenu = "Menu: (Type the corresponding number to select)\n\n1. List of books\n";
 
         BibliotecaApp.menu();
 
@@ -49,12 +49,6 @@ class BibliotecaAppTest {
         System.setOut(new PrintStream(outContent));
         int input = 1;
         InputStream in = new ByteArrayInputStream(Integer.toString(input).getBytes());
-        String expectedGreeting = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
-        String expectedMenu = "Menu: (Type the corresponding number to select)\n\n1. List of books\n";
-        String expectedBookList = "Books Available:\n\n" +
-                "S.no | Book Name | Author | Year of Publication\n" +
-                "1 | Old man and the sea | Earnest Hemingway | 2012\n" +
-                "2 | To Kill A Mocking Bird | Harper Collins | 2013\n";
         String expectedOutput = expectedGreeting + "\n\n" + expectedMenu + "\n" + expectedBookList;
 
         System.setIn(in);
@@ -62,4 +56,5 @@ class BibliotecaAppTest {
 
         assertEquals(expectedOutput, outContent.toString());
     }
+
 }
