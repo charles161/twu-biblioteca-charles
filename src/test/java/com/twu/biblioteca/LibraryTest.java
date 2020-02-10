@@ -8,6 +8,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class LibraryTest {
     @Test
@@ -54,14 +55,27 @@ public class LibraryTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenCheckingOutABookThatIsUnavailable(){
+    void shouldThrowExceptionWhenCheckingOutABookThatIsUnavailable() {
         Book book1 = mock(Book.class);
         List<Book> bookList = new ArrayList<>();
         Library library = new Library(bookList);
 
         assertFalse(library.isAvailable(book1));
-
-        assertThrows(BookNotAvailableException.class,() -> library.checkout(book1));
+        assertThrows(BookNotAvailableException.class, () -> library.checkout(book1));
     }
 
+    @Test
+    void shouldBeAbleToCheckoutBookByName() throws BookNotAvailableException {
+        Book book1 = mock(Book.class);
+        List<Book> bookList = new ArrayList<>() {{
+            add(book1);
+        }};
+        Library library = new Library(bookList);
+        String bookName = "someName";
+        when(book1.isName(bookName)).thenReturn(true);
+
+        library.checkout(bookName);
+
+        assertFalse(library.isAvailable(book1));
+    }
 }

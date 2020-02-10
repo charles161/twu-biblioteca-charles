@@ -15,10 +15,14 @@ public class Library {
         return bookList.contains(book);
     }
 
-    public void checkout(Book book) throws BookNotAvailableException {
-        if (isAvailable(book))
-            bookList.remove(book);
+    public void checkout(Book checkoutBook) throws BookNotAvailableException {
+        if (isAvailable(checkoutBook))
+            bookList.remove(checkoutBook);
         else
             throw new BookNotAvailableException();
+    }
+
+    public void checkout(String bookName) throws BookNotAvailableException {
+        bookList.removeIf(book -> book.isName(bookName));
     }
 }
