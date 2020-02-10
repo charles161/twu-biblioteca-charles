@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.ginsberg.junit.exit.ExpectSystemExit;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -109,4 +110,15 @@ class BibliotecaAppTest {
         verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
     }
 
+    @Test
+    @ExpectSystemExit
+    void shouldExitTheApplicationWhen2IsTyped() {
+        int userInput = 2;
+        InputStream inputStream1 = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
+
+        System.setIn(inputStream1);
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(0)).printErrorMessage(ERROR_MESSAGE);
+    }
 }

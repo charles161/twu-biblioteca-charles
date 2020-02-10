@@ -1,9 +1,6 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BibliotecaApp {
 
@@ -13,6 +10,7 @@ public class BibliotecaApp {
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
     private static final String MENU_OPTION_1 = "1. List of books";
+    private static final String MENU_OPTION_2 = "2. Quit";
     private Printer printer;
 
     public BibliotecaApp(Printer printer) {
@@ -24,7 +22,7 @@ public class BibliotecaApp {
     }
 
     public void displayMenu() {
-        this.printer.printMenuItems(MENU_LIST_TITLE, Collections.singletonList(MENU_OPTION_1));
+        this.printer.printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1, MENU_OPTION_2));
     }
 
     public void processUserInput() {
@@ -33,6 +31,8 @@ public class BibliotecaApp {
             int menuOption = scanner.nextInt();
             if (menuOption == 1) {
                 this.displayBookList();
+            } else if (menuOption == 2) {
+                System.exit(0);
             } else {
                 this.printer.printErrorMessage(ERROR_MESSAGE);
             }
