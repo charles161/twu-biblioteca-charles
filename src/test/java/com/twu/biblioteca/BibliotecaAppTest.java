@@ -21,6 +21,7 @@ class BibliotecaAppTest {
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
     private static final String MENU_OPTION_1 = "1. List of books";
     private static final String MENU_OPTION_2 = "2. Quit";
+    private static final String MENU_OPTION_3 = "3. Checkout";
 
     Printer printer = mock(Printer.class);
     BibliotecaApp bibliotecaApp = new BibliotecaApp(printer);
@@ -122,5 +123,12 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(0)).printErrorMessage(ERROR_MESSAGE);
+    }
+
+    @Test
+    public void shouldDisplayTheCheckoutOptionInTheMenu() {
+        bibliotecaApp.displayMenu();
+
+        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1, MENU_OPTION_2,MENU_OPTION_3));
     }
 }

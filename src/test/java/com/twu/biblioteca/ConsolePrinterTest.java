@@ -67,4 +67,5 @@ class ConsolePrinterTest {
 
         assertEquals(expectedOutput, outContent.toString());
     }
+
 }
