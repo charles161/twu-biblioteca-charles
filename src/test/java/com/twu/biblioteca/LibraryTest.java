@@ -93,5 +93,17 @@ public class LibraryTest {
         assertEquals(expectedBookDetails, library.availableBooksDetail());
     }
 
+    @Test
+    void shouldThrowExceptionWhenCheckingOutABookByNameThatIsUnavailable() {
+        Book book1 = mock(Book.class);
+        List<Book> bookList = new ArrayList<>();
+        Library library = new Library(bookList);
+        String bookName = "someName";
+        when(book1.isName(bookName)).thenReturn(true);
+
+        assertFalse(library.isAvailable(book1));
+        assertThrows(BookNotAvailableException.class, () -> library.checkout(bookName));
+    }
+
 
 }
