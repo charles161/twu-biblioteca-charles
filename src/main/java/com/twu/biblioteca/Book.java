@@ -28,6 +28,6 @@ public class Book {
     }
 
     public boolean isName(String bookName) {
-        return true;
+        return this.name.equals(bookName);
     }
 }
