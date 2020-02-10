@@ -1,6 +1,9 @@
 package com.twu.biblioteca;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class BibliotecaApp {
 
@@ -28,7 +31,7 @@ public class BibliotecaApp {
     public void processUserInput() {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextInt()) {
-            switch (scanner.nextInt()){
+            switch (scanner.nextInt()) {
                 case 1:
                     this.displayBookList();
                     return;

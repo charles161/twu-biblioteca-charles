@@ -7,7 +7,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -40,7 +39,7 @@ class BibliotecaAppTest {
         bibliotecaApp.displayMenu();
 
         verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
-        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1,MENU_OPTION_2));
+        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1, MENU_OPTION_2));
     }
 
     @Test
