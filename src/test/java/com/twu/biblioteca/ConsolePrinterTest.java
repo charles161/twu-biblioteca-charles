@@ -16,9 +16,6 @@ class ConsolePrinterTest {
     private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
-    private static final String MENU_OPTION_1 = "1. List of books";
-    private static final String MENU_OPTION_2 = "2. Quit";
-
 
     ConsolePrinter consolePrinter = new ConsolePrinter();
     ByteArrayOutputStream outContent;
@@ -50,9 +47,9 @@ class ConsolePrinterTest {
     void shouldBeAbleToPrintMenuItemsInConsole() {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        String expectedOutput = MENU_LIST_TITLE + "\n\n" + MENU_OPTION_1 + "\n" + MENU_OPTION_2 + "\n\n";
+        String expectedOutput = MENU_LIST_TITLE + "\n\n" + MenuOptions.MENU_OPTION_1.getOptionName() + "\n" + MenuOptions.MENU_OPTION_2.getOptionName() + "\n\n";
 
-        consolePrinter.printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1, MENU_OPTION_2));
+        consolePrinter.printMenuItems(MENU_LIST_TITLE, Arrays.asList(MenuOptions.MENU_OPTION_1, MenuOptions.MENU_OPTION_2));
 
         assertEquals(expectedOutput, outContent.toString());
     }

@@ -19,9 +19,6 @@ class BibliotecaAppTest {
     private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
-    private static final String MENU_OPTION_1 = "1. List of books";
-    private static final String MENU_OPTION_2 = "2. Quit";
-    private static final String MENU_OPTION_3 = "3. Checkout";
 
     Printer printer = mock(Printer.class);
     BibliotecaApp bibliotecaApp = new BibliotecaApp(printer);
@@ -129,6 +126,6 @@ class BibliotecaAppTest {
     public void shouldDisplayTheCheckoutOptionInTheMenu() {
         bibliotecaApp.displayMenu();
 
-        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1, MENU_OPTION_2,MENU_OPTION_3));
+        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MenuOptions.MENU_OPTION_1, MenuOptions.MENU_OPTION_2, MenuOptions.MENU_OPTION_3));
     }
 }

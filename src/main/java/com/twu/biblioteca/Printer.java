@@ -14,7 +14,7 @@ interface PrintAvailableBooks {
 }
 
 interface PrintMenuItems {
-    void printMenuItems(String title, List<String> menuOptions);
+    void printMenuItems(String title, List<MenuOptions> menuOptions);
 }
 
 interface PrintErrorMessage {

@@ -23,11 +23,11 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void printMenuItems(String title, List<String> menuOptions) {
+    public void printMenuItems(String title, List<MenuOptions> menuOptions) {
         System.out.println(title);
         System.out.println();
-        for (String menuOption : menuOptions) {
-            System.out.println(menuOption);
+        for (MenuOptions menuOption : menuOptions) {
+            System.out.println(menuOption.getOptionName());
         }
         System.out.println();
     }
