@@ -65,4 +65,14 @@ class ConsolePrinterTest {
         assertEquals(expectedOutput, outContent.toString());
     }
 
+    @Test
+    void shouldBeAbleToPrintMessageInConsole() {
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        String expectedOutput = "\ncool\n";
+
+        consolePrinter.printMessage("cool");
+
+        assertEquals(expectedOutput, outContent.toString());
+    }
 }

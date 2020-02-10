@@ -36,4 +36,12 @@ public class ConsolePrinter implements Printer {
     public void printErrorMessage(String message) {
         System.out.println(message);
     }
+
+    @Override
+    public void printMessage(String message) {
+        System.out.println();
+        System.out.println(message);
+    }
+
+
 }

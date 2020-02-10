@@ -2,7 +2,7 @@ package com.twu.biblioteca;
 
 import java.util.List;
 
-public interface Printer extends PrintGreeting, PrintAvailableBooks, PrintMenuItems, PrintErrorMessage {
+public interface Printer extends PrintGreeting, PrintAvailableBooks, PrintMenuItems, PrintErrorMessage, PrintMessage {
 }
 
 interface PrintGreeting {
@@ -19,4 +19,8 @@ interface PrintMenuItems {
 
 interface PrintErrorMessage {
     void printErrorMessage(String message);
+}
+
+interface PrintMessage {
+    void printMessage(String message);
 }
