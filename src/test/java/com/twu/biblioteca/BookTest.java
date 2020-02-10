@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BookTest {
     @Test
@@ -18,5 +19,14 @@ class BookTest {
         bookList.add(bookDetail);
 
         assertEquals(bookList, Book.buildList(Collections.singletonList(book)));
+    }
+
+    @Test
+    void shouldReturnTrueIfBookNameMatchesWithTheString(){
+        Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
+
+        String bookName = "Sherlock Holmes";
+
+        assertTrue(book.isName(bookName));
     }
 }

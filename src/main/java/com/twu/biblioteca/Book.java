@@ -26,4 +26,8 @@ public class Book {
     private static String columnedProperties(Book book) {
         return book.name + " | " + book.author + " | " + book.yearOfPublication;
     }
+
+    public boolean isName(String bookName) {
+        return true;
+    }
 }
