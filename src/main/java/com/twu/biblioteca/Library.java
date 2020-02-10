@@ -22,7 +22,7 @@ public class Library {
             throw new BookNotAvailableException();
     }
 
-    public void checkout(String bookName) throws BookNotAvailableException {
+    public void checkout(String bookName) {
         bookList.removeIf(book -> book.isName(bookName));
     }
 
