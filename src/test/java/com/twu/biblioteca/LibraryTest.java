@@ -37,4 +37,19 @@ public class LibraryTest {
         assertFalse(library.isAvailable(book1));
     }
 
+    @Test
+    void shouldBeAbleToCheckoutABookIfItIsAvailable() {
+        Book book1 = mock(Book.class);
+        List<Book> bookList = new ArrayList<>() {
+            {
+                add(book1);
+            }
+        };
+        Library library = new Library(bookList);
+
+        assertTrue(library.isAvailable(book1));
+        library.checkout(book1);
+        assertFalse(library.isAvailable(book1));
+    }
+
 }

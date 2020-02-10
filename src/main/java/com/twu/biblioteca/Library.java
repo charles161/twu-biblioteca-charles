@@ -12,4 +12,8 @@ public class Library {
     public boolean isAvailable(Book book) {
         return bookList.contains(book);
     }
+
+    public void checkout(Book book) {
+        bookList.remove(book);
+    }
 }
