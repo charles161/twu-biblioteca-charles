@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import com.ginsberg.junit.exit.ExpectSystemExit;
+import com.twu.biblioteca.Exceptions.BookNotAvailableException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -22,7 +23,8 @@ class BibliotecaAppTest {
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
 
     Printer printer = mock(Printer.class);
-    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer);
+    Library library = mock(Library.class);
+    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library);
 
 
     @Test
@@ -43,24 +45,18 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() {
+    public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() throws BookNotAvailableException {
         int userInput = 1;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
-        Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
-        Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
-        List<Book> bookList = new ArrayList<>();
-        bookList.add(book1);
-        bookList.add(book2);
-        List<String> bookDetails = Book.buildList(bookList);
 
         System.setIn(inputStream);
         bibliotecaApp.processUserInput();
 
-        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
+        verify(printer, times(1)).printAvailableBooks(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() {
+    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() throws BookNotAvailableException {
         int userInput = 6;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
@@ -71,7 +67,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption4IsSelected() {
+    public void shouldNotifyUserWhenAnInvalidOption4IsSelected() throws BookNotAvailableException {
         int userInput = 4;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
@@ -82,27 +78,21 @@ class BibliotecaAppTest {
     }
 
     @Test
-    void shouldDisplayTheListOfBooksForAValidInputAfterAnInvalidInput() {
+    void shouldDisplayTheListOfBooksForAValidInputAfterAnInvalidInput() throws BookNotAvailableException {
         int invalidInput = 7;
         int validInput = 1;
         InputStream inputStream1 = new ByteArrayInputStream((invalidInput + "\n" + validInput).getBytes());
-        Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
-        Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
-        List<Book> bookList = new ArrayList<>();
-        bookList.add(book1);
-        bookList.add(book2);
-        List<String> bookDetails = Book.buildList(bookList);
 
         System.setIn(inputStream1);
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
-        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
+        verify(printer, times(1)).printAvailableBooks(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
     }
 
     @Test
     @ExpectSystemExit
-    void shouldExitTheApplicationWhen2IsTyped() {
+    void shouldExitTheApplicationWhen2IsTyped() throws BookNotAvailableException {
         int userInput = 2;
         InputStream inputStream1 = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
@@ -120,7 +110,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected() {
+    public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected() throws BookNotAvailableException {
         int userInput = 3;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
@@ -131,7 +121,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotDisplayTheNameOfTheBook1WhenCheckedOut() {
+    public void shouldNotDisplayTheNameOfTheBook1WhenCheckedOut() throws BookNotAvailableException {
         int userInput1 = 3;
         String bookName = "Old man and the sea";
         int userInput2 = 1;
@@ -140,6 +130,7 @@ class BibliotecaAppTest {
         List<Book> bookList = new ArrayList<>();
         bookList.add(book);
         List<String> bookDetails = Book.buildList(bookList);
+        when(library.availableBooksDetail()).thenReturn(bookDetails);
 
         System.setIn(inputStream);
         bibliotecaApp.processUserInput();
@@ -149,7 +140,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotDisplayTheNameOfTheBook2WhenCheckedOut() {
+    public void shouldNotDisplayTheNameOfTheBook2WhenCheckedOut() throws BookNotAvailableException {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         int userInput2 = 1;
@@ -158,6 +149,7 @@ class BibliotecaAppTest {
         List<Book> bookList = new ArrayList<>();
         bookList.add(book);
         List<String> bookDetails = Book.buildList(bookList);
+        when(library.availableBooksDetail()).thenReturn(bookDetails);
 
         System.setIn(inputStream);
         bibliotecaApp.processUserInput();
