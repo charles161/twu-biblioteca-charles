@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.Exceptions.BookNotAvailableException;
+
 import java.util.List;
 
 public class Library {
@@ -13,7 +15,10 @@ public class Library {
         return bookList.contains(book);
     }
 
-    public void checkout(Book book) {
-        bookList.remove(book);
+    public void checkout(Book book) throws BookNotAvailableException {
+        if (isAvailable(book))
+            bookList.remove(book);
+        else
+            throw new BookNotAvailableException();
     }
 }

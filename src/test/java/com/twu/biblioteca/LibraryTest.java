@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.Exceptions.BookNotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class LibraryTest {
     }
 
     @Test
-    void shouldBeAbleToCheckoutABookIfItIsAvailable() {
+    void shouldBeAbleToCheckoutABookIfItIsAvailable() throws BookNotAvailableException {
         Book book1 = mock(Book.class);
         List<Book> bookList = new ArrayList<>() {
             {
@@ -50,6 +51,17 @@ public class LibraryTest {
         assertTrue(library.isAvailable(book1));
         library.checkout(book1);
         assertFalse(library.isAvailable(book1));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCheckingOutABookThatIsUnavailable(){
+        Book book1 = mock(Book.class);
+        List<Book> bookList = new ArrayList<>();
+        Library library = new Library(bookList);
+
+        assertFalse(library.isAvailable(book1));
+
+        assertThrows(BookNotAvailableException.class,() -> library.checkout(book1));
     }
 
 }
