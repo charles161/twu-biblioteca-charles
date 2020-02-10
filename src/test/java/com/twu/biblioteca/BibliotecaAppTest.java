@@ -71,17 +71,6 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption3IsSelected() {
-        int userInput = 3;
-        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
-
-        System.setIn(inputStream);
-        bibliotecaApp.processUserInput();
-
-        verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
-    }
-
-    @Test
     public void shouldNotifyUserWhenAnInvalidOption4IsSelected() {
         int userInput = 4;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
@@ -131,7 +120,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected(){
+    public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected() {
         int userInput = 3;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
@@ -139,5 +128,41 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
+    }
+
+    @Test
+    public void shouldNotDisplayTheNameOfTheBook1WhenCheckedOut() {
+        int userInput1 = 3;
+        String bookName = "Old man and the sea";
+        int userInput2 = 1;
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName + "\n" + userInput2).getBytes());
+        Book book = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book);
+        List<String> bookDetails = Book.buildList(bookList);
+
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
+        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
+    }
+
+    @Test
+    public void shouldNotDisplayTheNameOfTheBook2WhenCheckedOut() {
+        int userInput1 = 3;
+        String bookName = "To Kill A Mocking Bird";
+        int userInput2 = 1;
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName + "\n" + userInput2).getBytes());
+        Book book = new Book("Old man and the sea", "Earnest Hemingway", 2012);
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book);
+        List<String> bookDetails = Book.buildList(bookList);
+
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
+        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
     }
 }
