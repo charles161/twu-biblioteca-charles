@@ -28,13 +28,14 @@ public class BibliotecaApp {
     public void processUserInput() {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextInt()) {
-            int menuOption = scanner.nextInt();
-            if (menuOption == 1) {
-                this.displayBookList();
-            } else if (menuOption == 2) {
-                System.exit(0);
-            } else {
-                this.printer.printErrorMessage(ERROR_MESSAGE);
+            switch (scanner.nextInt()){
+                case 1:
+                    this.displayBookList();
+                    return;
+                case 2:
+                    System.exit(0);
+                default:
+                    this.printer.printErrorMessage(ERROR_MESSAGE);
             }
         }
     }
