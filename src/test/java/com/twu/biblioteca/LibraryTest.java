@@ -78,4 +78,20 @@ public class LibraryTest {
 
         assertFalse(library.isAvailable(book1));
     }
+
+    @Test
+    void shouldReturnAListOfBookDetails() {
+        Book book1 = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
+        List<Book> bookList = new ArrayList<>() {{
+            add(book1);
+        }};
+        Library library = new Library(bookList);
+        String bookDetail = "Sherlock Holmes | Sir Arthur Conan Doyle | 1999";
+        List<String> expectedBookDetails = new ArrayList<>();
+        expectedBookDetails.add(bookDetail);
+
+        assertEquals(expectedBookDetails, library.availableBooksDetail());
+    }
+
+
 }

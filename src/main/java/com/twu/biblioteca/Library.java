@@ -25,4 +25,8 @@ public class Library {
     public void checkout(String bookName) throws BookNotAvailableException {
         bookList.removeIf(book -> book.isName(bookName));
     }
+
+    public List<String> availableBooksDetail() {
+        return Book.buildList(bookList);
+    }
 }
