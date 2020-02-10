@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,6 +20,8 @@ class BibliotecaAppTest {
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
     private static final String MENU_OPTION_1 = "1. List of books";
+    private static final String MENU_OPTION_2 = "2. Quit";
+
     Printer printer = mock(Printer.class);
     BibliotecaApp bibliotecaApp = new BibliotecaApp(printer);
 
@@ -33,12 +36,11 @@ class BibliotecaAppTest {
 
     @Test
     public void shouldDisplayTheMenuAfterTheGreeting() {
-
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
 
         verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
-        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Collections.singletonList(MENU_OPTION_1));
+        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1,MENU_OPTION_2));
     }
 
     @Test
