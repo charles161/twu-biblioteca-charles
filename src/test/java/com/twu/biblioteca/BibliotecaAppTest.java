@@ -58,8 +58,8 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption2IsSelected() {
-        int userInput = 2;
+    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() {
+        int userInput = 6;
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
@@ -88,6 +88,25 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
+    }
+
+    @Test
+    void shouldDisplayTheListOfBooksForAValidInputAfterAnInvalidInput() {
+        int invalidInput = 7;
+        int validInput = 1;
+        InputStream inputStream1 = new ByteArrayInputStream((invalidInput + "\n" + validInput).getBytes());
+        Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
+        Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(book1);
+        bookList.add(book2);
+        List<String> bookDetails = Book.buildList(bookList);
+
+        System.setIn(inputStream1);
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
+        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
     }
 
 }
