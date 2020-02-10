@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import com.ginsberg.junit.exit.ExpectSystemExit;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -39,7 +40,7 @@ class BibliotecaAppTest {
         bibliotecaApp.displayMenu();
 
         verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
-        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MENU_OPTION_1, MENU_OPTION_2));
+        verify(printer, times(1)).printMenuItems(Mockito.anyString(), Mockito.anyList());
     }
 
     @Test
