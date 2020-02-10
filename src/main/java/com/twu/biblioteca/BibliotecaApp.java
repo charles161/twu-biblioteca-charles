@@ -9,6 +9,7 @@ public class BibliotecaApp {
 
     private static final String GREETING_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static final String ERROR_MESSAGE = "Please select a valid option!";
+    private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
     private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
@@ -37,6 +38,8 @@ public class BibliotecaApp {
                     return;
                 case 2:
                     System.exit(0);
+                case 3:
+                    this.printer.printMessage(ENTER_BOOK_MESSAGE);
                 default:
                     this.printer.printErrorMessage(ERROR_MESSAGE);
             }

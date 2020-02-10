@@ -16,6 +16,7 @@ class BibliotecaAppTest {
 
     private static final String GREETING_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static final String ERROR_MESSAGE = "Please select a valid option!";
+    private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
     private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
@@ -127,5 +128,16 @@ class BibliotecaAppTest {
         bibliotecaApp.displayMenu();
 
         verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MenuOptions.MENU_OPTION_1, MenuOptions.MENU_OPTION_2, MenuOptions.MENU_OPTION_3));
+    }
+
+    @Test
+    public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected(){
+        int userInput = 3;
+        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
+
+        System.setIn(inputStream);
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
     }
 }
