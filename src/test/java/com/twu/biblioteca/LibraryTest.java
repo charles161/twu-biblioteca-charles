@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.Exceptions.BookAlreadyReturnedException;
 import com.twu.biblioteca.Exceptions.BookNotAvailableException;
 import org.junit.jupiter.api.Test;
 
@@ -88,6 +89,33 @@ public class LibraryTest {
 
         assertFalse(library.isAvailable(book1));
         assertThrows(BookNotAvailableException.class, () -> library.checkout(bookName));
+    }
+
+    @Test
+    void shouldBeAbleToReturnBookByNameSoThatItsAvailable() throws BookNotAvailableException, BookAlreadyReturnedException {
+        Book book1 = mock(Book.class);
+        Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
+        String bookName = "someName";
+        when(book1.isName(bookName)).thenReturn(true);
+
+        library.checkout(bookName);
+        library.returnBook(bookName);
+
+        assertTrue(library.isAvailable(book1));
+    }
+
+    @Test
+    void shouldThrowExceptionWhenBookReturnedTwice() throws BookNotAvailableException {
+        Book book1 = mock(Book.class);
+        Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
+        String bookName = "someName";
+        when(book1.isName(bookName)).thenReturn(true);
+
+        library.checkout(bookName);
+        library.returnBook(bookName);
+
+        assertThrows(BookNotAvailableException.class, () -> library.returnBook(bookName));
+
     }
 
 

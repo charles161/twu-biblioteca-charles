@@ -1,11 +1,14 @@
 package com.twu.biblioteca;
 
+import com.twu.biblioteca.Exceptions.BookAlreadyReturnedException;
 import com.twu.biblioteca.Exceptions.BookNotAvailableException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
     private List<Book> bookList;
+    private List<Book> checkedOutList = new ArrayList<>();
 
     public Library(List<Book> bookList) {
         this.bookList = bookList;
@@ -25,8 +28,10 @@ public class Library {
     public void checkout(String bookName) throws BookNotAvailableException {
         boolean bookAvailable = false;
         for (Book book : bookList) {
-            if (book.isName(bookName))
+            if (book.isName(bookName)) {
+                checkedOutList.add(book);
                 bookAvailable = true;
+            }
         }
         if (!bookAvailable)
             throw new BookNotAvailableException();
@@ -35,5 +40,18 @@ public class Library {
 
     public List<String> availableBooksDetail() {
         return Book.buildList(bookList);
+    }
+
+    public void returnBook(String bookName) throws BookNotAvailableException {
+        boolean bookAvailable = false;
+        for (Book book : checkedOutList) {
+            if (book.isName(bookName)) {
+                bookList.add(book);
+                bookAvailable = true;
+            }
+        }
+        if (!bookAvailable)
+            throw new BookNotAvailableException();
+        checkedOutList.removeIf(book -> book.isName(bookName));
     }
 }

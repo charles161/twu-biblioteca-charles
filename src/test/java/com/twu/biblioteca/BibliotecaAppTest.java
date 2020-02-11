@@ -68,17 +68,6 @@ class BibliotecaAppTest {
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
     }
 
-    @Test
-    public void shouldNotifyUserWhenAnInvalidOption4IsSelected() throws BookNotAvailableException {
-        int userInput = 4;
-        InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
-
-        System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
-        bibliotecaApp.processUserInput();
-
-        verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
-    }
 
     @Test
     void shouldDisplayTheListOfBooksForAValidInputAfterAnInvalidInput() throws BookNotAvailableException {
@@ -140,16 +129,10 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotDisplayTheNameOfTheBook2WhenCheckedOut() throws BookNotAvailableException {
+    public void shouldCheckoutABookWhenAbOOkNameIsEntered() throws BookNotAvailableException {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
-        int userInput2 = 1;
-        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName + "\n" + userInput2).getBytes());
-        Book book = new Book("Old man and the sea", "Earnest Hemingway", 2012);
-        List<Book> bookList = new ArrayList<>();
-        bookList.add(book);
-        List<String> bookDetails = Book.buildList(bookList);
-        when(library.availableBooksDetail()).thenReturn(bookDetails);
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
 
         System.setIn(inputStream);
         BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
@@ -185,5 +168,19 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
+    }
+
+    @Test
+    void shouldBeAbleToReturnABookWhenABookNameIsEntered() throws BookNotAvailableException {
+        int userInput1 = 4;
+        String bookName = "To Kill A Mocking Bird";
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
+
+        System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
+        verify(library, times(1)).returnBook(bookName);
     }
 }

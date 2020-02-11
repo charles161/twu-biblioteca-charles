@@ -73,6 +73,27 @@ public class BibliotecaApp {
                 }
             }
         });
+        menuOptionMap.put(4, new MenuOption() {
+            @Override
+            public String title() {
+                return "Return";
+            }
+
+            @Override
+            public void onSelect() {
+                printer.printMessage(ENTER_BOOK_MESSAGE);
+                if (scanner.hasNextLine()) {
+                    if (scanner.hasNext()) {
+                        scanner.nextLine();
+                        String bookName = scanner.nextLine().replace("\n", "");
+                        try {
+                            library.returnBook(bookName);
+                        } catch (BookNotAvailableException e) {
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public void displayGreeting() {
