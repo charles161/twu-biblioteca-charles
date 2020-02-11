@@ -19,6 +19,7 @@ class BibliotecaAppTest {
     private static final String GREETING_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static final String ERROR_MESSAGE = "Please select a valid option!";
     private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
+    private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
 
 
     Printer printer = mock(Printer.class);
@@ -155,5 +156,19 @@ class BibliotecaAppTest {
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
         verify(library, times(1)).checkout(bookName);
+    }
+
+    @Test
+    void shouldDisplaySuccessMessageAfterSuccessfulCheckout() throws BookNotAvailableException {
+        int userInput1 = 3;
+        String bookName = "To Kill A Mocking Bird";
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
+        doNothing().when(library).checkout(bookName);
+
+        System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
     }
 }

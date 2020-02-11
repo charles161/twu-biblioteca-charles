@@ -12,6 +12,7 @@ public class BibliotecaApp {
     private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
+    private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
 
     private Printer printer;
     private Library library;
@@ -64,6 +65,7 @@ public class BibliotecaApp {
                         System.out.println(bookName);
                         try {
                             library.checkout(bookName);
+                            printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
                         } catch (Exception e) {
 
                         }
