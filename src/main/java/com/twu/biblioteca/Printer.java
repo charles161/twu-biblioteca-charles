@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import java.util.List;
+import java.util.Map;
 
 public interface Printer extends PrintGreeting, PrintAvailableBooks, PrintMenuItems, PrintErrorMessage, PrintMessage {
 }
@@ -14,7 +15,7 @@ interface PrintAvailableBooks {
 }
 
 interface PrintMenuItems {
-    void printMenuItems(String title, List<MenuOptions> menuOptions);
+    void printMenuItems(String title, Map<Integer, MenuOption> menuOptions);
 }
 
 interface PrintErrorMessage {

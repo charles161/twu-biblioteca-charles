@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 class ConsolePrinterTest {
 
@@ -45,13 +47,13 @@ class ConsolePrinterTest {
 
     @Test
     void shouldBeAbleToPrintMenuItemsInConsole() {
-        outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-        String expectedOutput = MENU_LIST_TITLE + "\n\n" + MenuOptions.MENU_OPTION_1.getOptionName() + "\n" + MenuOptions.MENU_OPTION_2.getOptionName() + "\n\n";
+        MenuOption menuOption = mock(MenuOption.class);
+        Map<Integer, MenuOption> menuOptionMap = new HashMap<>();
+        menuOptionMap.put(1, menuOption);
 
-        consolePrinter.printMenuItems(MENU_LIST_TITLE, Arrays.asList(MenuOptions.MENU_OPTION_1, MenuOptions.MENU_OPTION_2));
+        consolePrinter.printMenuItems(MENU_LIST_TITLE, menuOptionMap);
 
-        assertEquals(expectedOutput, outContent.toString());
+        verify(menuOption, times(1)).title();
     }
 
     @Test

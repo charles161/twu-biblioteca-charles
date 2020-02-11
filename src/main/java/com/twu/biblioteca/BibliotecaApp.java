@@ -2,10 +2,7 @@ package com.twu.biblioteca;
 
 import com.twu.biblioteca.Exceptions.BookNotAvailableException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BibliotecaApp {
 
@@ -16,13 +13,64 @@ public class BibliotecaApp {
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
 
-
     private Printer printer;
     private Library library;
+    private Scanner scanner;
+    Map<Integer, MenuOption> menuOptionMap = new HashMap<>();
 
-    public BibliotecaApp(Printer printer, Library library) {
+    public BibliotecaApp(Printer printer, Library library, Scanner scanner) {
         this.printer = printer;
         this.library = library;
+        this.scanner = scanner;
+        initialiseMenu();
+    }
+
+    private void initialiseMenu() {
+        menuOptionMap.put(1, new MenuOption() {
+            @Override
+            public String title() {
+                return "List of books";
+            }
+
+            @Override
+            public void onSelect() {
+                printer.printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.availableBooksDetail());
+            }
+        });
+        menuOptionMap.put(2, new MenuOption() {
+            @Override
+            public String title() {
+                return "Quit";
+            }
+
+            @Override
+            public void onSelect() {
+                System.exit(0);
+            }
+        });
+        menuOptionMap.put(3, new MenuOption() {
+            @Override
+            public String title() {
+                return "Checkout";
+            }
+
+            @Override
+            public void onSelect() {
+                printer.printMessage(ENTER_BOOK_MESSAGE);
+                if (scanner.hasNextLine()) {
+                    if (scanner.hasNext()) {
+                        scanner.nextLine();
+                        String bookName = scanner.nextLine().replace("\n", "");
+                        System.out.println(bookName);
+                        try {
+                            library.checkout(bookName);
+                        } catch (Exception e) {
+
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public void displayGreeting() {
@@ -30,37 +78,17 @@ public class BibliotecaApp {
     }
 
     public void displayMenu() {
-        this.printer.printMenuItems(MENU_LIST_TITLE, Arrays.asList(MenuOptions.MENU_OPTION_1, MenuOptions.MENU_OPTION_2, MenuOptions.MENU_OPTION_3));
+        this.printer.printMenuItems(MENU_LIST_TITLE, menuOptionMap);
     }
 
-    public void processUserInput() throws BookNotAvailableException {
-        Scanner scanner = new Scanner(System.in);
+    public void processUserInput() {
         while (scanner.hasNextInt()) {
-            switch (scanner.nextInt()) {
-                case 1:
-                    this.displayBookList();
-                    break;
-                case 2:
-                    System.exit(0);
-                case 3:
-                    this.printer.printMessage(ENTER_BOOK_MESSAGE);
-                    if (scanner.hasNextLine()) {
-                        if (scanner.hasNext()) {
-                            scanner.nextLine();
-                            String bookName = scanner.nextLine().replace("\n","");
-                            System.out.println(bookName);
-                            library.checkout(bookName);
-                        }
-                    }
-                    break;
-                default:
-                    this.printer.printErrorMessage(ERROR_MESSAGE);
-            }
+            int menuOption = scanner.nextInt();
+            if (menuOptionMap.containsKey(menuOption)) {
+                menuOptionMap.get(menuOption).onSelect();
+            } else
+                this.printer.printErrorMessage(ERROR_MESSAGE);
         }
-    }
-
-    private void displayBookList() {
-        this.printer.printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.availableBooksDetail());
     }
 
     public static void main(String[] args) throws BookNotAvailableException {
@@ -72,9 +100,12 @@ public class BibliotecaApp {
                 add(book2);
             }
         };
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(bookList));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(bookList), new Scanner(System.in));
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
         bibliotecaApp.processUserInput();
     }
+
 }
+
+

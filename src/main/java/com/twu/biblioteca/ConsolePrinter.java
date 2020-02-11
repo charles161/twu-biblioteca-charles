@@ -1,6 +1,7 @@
 package com.twu.biblioteca;
 
 import java.util.List;
+import java.util.Map;
 
 public class ConsolePrinter implements Printer {
 
@@ -23,12 +24,16 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void printMenuItems(String title, List<MenuOptions> menuOptions) {
+    public void printMenuItems(String title, Map<Integer, MenuOption> menuOptions) {
         System.out.println(title);
         System.out.println();
-        for (MenuOptions menuOption : menuOptions) {
-            System.out.println(menuOption.getOptionName());
+
+        for (Map.Entry mapElement : menuOptions.entrySet()) {
+            MenuOption option = (MenuOption) mapElement.getValue();
+            Integer serial = (Integer) mapElement.getKey();
+            System.out.println(serial + ". " + option.title());
         }
+
         System.out.println();
     }
 

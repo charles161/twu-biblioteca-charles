@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 import static org.mockito.Mockito.*;
 
@@ -18,18 +19,15 @@ class BibliotecaAppTest {
     private static final String GREETING_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static final String ERROR_MESSAGE = "Please select a valid option!";
     private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
-    private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
-    private static final String BOOK_LIST_TITLE = "Books Available:";
-    private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
+
 
     Printer printer = mock(Printer.class);
     Library library = mock(Library.class);
-    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library);
+    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
 
 
     @Test
     void shouldDisplayGreetingMessageWhenTheApplicationStarts() {
-
         bibliotecaApp.displayGreeting();
 
         verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
@@ -41,7 +39,7 @@ class BibliotecaAppTest {
         bibliotecaApp.displayMenu();
 
         verify(printer, times(1)).printGreeting(GREETING_MESSAGE);
-        verify(printer, times(1)).printMenuItems(Mockito.anyString(), Mockito.anyList());
+        verify(printer, times(1)).printMenuItems(Mockito.anyString(), Mockito.anyMap());
     }
 
     @Test
@@ -50,6 +48,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printAvailableBooks(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
@@ -61,6 +60,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
@@ -72,6 +72,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
@@ -84,6 +85,7 @@ class BibliotecaAppTest {
         InputStream inputStream1 = new ByteArrayInputStream((invalidInput + "\n" + validInput).getBytes());
 
         System.setIn(inputStream1);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
@@ -97,16 +99,10 @@ class BibliotecaAppTest {
         InputStream inputStream1 = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream1);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(0)).printErrorMessage(ERROR_MESSAGE);
-    }
-
-    @Test
-    public void shouldDisplayTheCheckoutOptionInTheMenu() {
-        bibliotecaApp.displayMenu();
-
-        verify(printer, times(1)).printMenuItems(MENU_LIST_TITLE, Arrays.asList(MenuOptions.MENU_OPTION_1, MenuOptions.MENU_OPTION_2, MenuOptions.MENU_OPTION_3));
     }
 
     @Test
@@ -115,6 +111,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
@@ -133,10 +130,11 @@ class BibliotecaAppTest {
         when(library.availableBooksDetail()).thenReturn(bookDetails);
 
         System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
-        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
+        verify(library, times(1)).checkout(bookName);
     }
 
     @Test
@@ -152,9 +150,10 @@ class BibliotecaAppTest {
         when(library.availableBooksDetail()).thenReturn(bookDetails);
 
         System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
-        verify(printer, times(1)).printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, bookDetails);
+        verify(library, times(1)).checkout(bookName);
     }
 }
