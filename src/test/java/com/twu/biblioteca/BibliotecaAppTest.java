@@ -20,6 +20,7 @@ class BibliotecaAppTest {
     private static final String ERROR_MESSAGE = "Please select a valid option!";
     private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
     private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
+    private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
 
 
     Printer printer = mock(Printer.class);
@@ -170,5 +171,19 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
+    }
+
+    @Test
+    void shouldDisplayErrorMessageAfterUnsuccessfulCheckout() throws BookNotAvailableException {
+        int userInput1 = 3;
+        String bookName = "To Kill A Mocking Bird";
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
+        doThrow(BookNotAvailableException.class).when(library).checkout(bookName);
+
+        System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
     }
 }

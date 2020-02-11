@@ -13,6 +13,7 @@ public class BibliotecaApp {
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
     private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
+    private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
 
     private Printer printer;
     private Library library;
@@ -62,12 +63,11 @@ public class BibliotecaApp {
                     if (scanner.hasNext()) {
                         scanner.nextLine();
                         String bookName = scanner.nextLine().replace("\n", "");
-                        System.out.println(bookName);
                         try {
                             library.checkout(bookName);
                             printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
-                        } catch (Exception e) {
-
+                        } catch (BookNotAvailableException e) {
+                            printer.printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
                         }
                     }
                 }
