@@ -21,6 +21,7 @@ class BibliotecaAppTest {
     private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
     private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
     private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
+    private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
 
 
     Printer printer = mock(Printer.class);
@@ -182,5 +183,19 @@ class BibliotecaAppTest {
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
         verify(library, times(1)).returnBook(bookName);
+    }
+
+    @Test
+    void shouldDisplaySuccessMessageAfterSuccessfulReturn() throws BookNotAvailableException {
+        int userInput1 = 4;
+        String bookName = "To Kill A Mocking Bird";
+        InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
+        doNothing().when(library).returnBook(bookName);
+
+        System.setIn(inputStream);
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(SUCCESSFUL_RETURN_MESSAGE);
     }
 }
