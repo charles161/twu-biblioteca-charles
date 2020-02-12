@@ -28,14 +28,14 @@ public class Library {
     }
 
     public void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
-        replaceLibraryItem(libraryItemName, signature, itemList, checkedOutList);
+        moveLibraryItem(libraryItemName, signature, itemList, checkedOutList);
     }
 
     public void returnLibraryItem(String libraryItemName) throws LibraryItemNotAvailableException {
-        replaceLibraryItem(libraryItemName, Signature.BOOK, checkedOutList, itemList);
+        moveLibraryItem(libraryItemName, Signature.BOOK, checkedOutList, itemList);
     }
 
-    private void replaceLibraryItem(String libraryItemName, Signature signature, List<LibraryItem> inputList, List<LibraryItem> outputList) throws LibraryItemNotAvailableException {
+    private void moveLibraryItem(String libraryItemName, Signature signature, List<LibraryItem> inputList, List<LibraryItem> outputList) throws LibraryItemNotAvailableException {
         boolean itemCheckedOut = false;
         Iterator iterator = inputList.iterator();
         while (iterator.hasNext()) {
