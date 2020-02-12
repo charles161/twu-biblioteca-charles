@@ -18,24 +18,6 @@ public class Library {
         return itemList.contains(libraryItem);
     }
 
-    public void checkout(String libraryItemName,Signature signature) throws LibraryItemNotAvailableException {
-        boolean itemCheckedOut = false;
-        Iterator iterator = itemList.iterator();
-        while (iterator.hasNext())
-        {
-            LibraryItem libraryItem = (LibraryItem)iterator.next();
-            if (libraryItem.isName(libraryItemName) && libraryItem.signature().equals(signature))
-            {
-                itemCheckedOut = true;
-                checkedOutList.add(libraryItem);
-                iterator.remove();
-                break;
-            }
-        }
-        if(!itemCheckedOut)
-        throw new LibraryItemNotAvailableException();
-    }
-
     public List<String> itemDetails(Signature signature) {
         List<String> libraryItemListString = new ArrayList<>();
         for (LibraryItem libraryItem : itemList) {
@@ -45,16 +27,27 @@ public class Library {
         return libraryItemListString;
     }
 
-    public void returnLibraryItem(String itemName) throws LibraryItemNotAvailableException {
-        boolean libraryItemAvailable = false;
-        for (LibraryItem libraryItem : checkedOutList) {
-            if (libraryItem.isName(itemName)) {
-                itemList.add(libraryItem);
-                libraryItemAvailable = true;
+    public void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
+        replaceLibraryItem(libraryItemName, signature, itemList, checkedOutList);
+    }
+
+    public void returnLibraryItem(String libraryItemName) throws LibraryItemNotAvailableException {
+        replaceLibraryItem(libraryItemName, Signature.BOOK, checkedOutList, itemList);
+    }
+
+    private void replaceLibraryItem(String libraryItemName, Signature signature, List<LibraryItem> inputList, List<LibraryItem> outputList) throws LibraryItemNotAvailableException {
+        boolean itemCheckedOut = false;
+        Iterator iterator = inputList.iterator();
+        while (iterator.hasNext()) {
+            LibraryItem libraryItem = (LibraryItem) iterator.next();
+            if (libraryItem.isName(libraryItemName) && libraryItem.signature().equals(signature)) {
+                itemCheckedOut = true;
+                outputList.add(libraryItem);
+                iterator.remove();
+                break;
             }
         }
-        if (!libraryItemAvailable)
+        if (!itemCheckedOut)
             throw new LibraryItemNotAvailableException();
-        checkedOutList.removeIf(libraryItem -> libraryItem.isName(itemName));
     }
 }
