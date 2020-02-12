@@ -27,10 +27,6 @@ public class Library {
         return libraryItemListString;
     }
 
-    private boolean isEquals(Signature signature, LibraryItem libraryItem) {
-        return libraryItem.signature().equals(signature);
-    }
-
     public void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
         replaceLibraryItem(libraryItemName, signature, itemList, checkedOutList);
     }
@@ -53,5 +49,9 @@ public class Library {
         }
         if (!itemCheckedOut)
             throw new LibraryItemNotAvailableException();
+    }
+
+    private boolean isEquals(Signature signature, LibraryItem libraryItem) {
+        return libraryItem.signature().equals(signature);
     }
 }

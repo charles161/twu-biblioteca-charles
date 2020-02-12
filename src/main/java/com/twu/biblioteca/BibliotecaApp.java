@@ -70,7 +70,7 @@ public class BibliotecaApp {
                     input.nextLine();
                     String bookName = input.nextLine().replace("\n", "");
                     try {
-                        library.checkout(bookName,Signature.BOOK);
+                        library.checkout(bookName, Signature.BOOK);
                         printer.printMessage(SUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
@@ -124,7 +124,7 @@ public class BibliotecaApp {
                     input.nextLine();
                     String movieName = input.nextLine().replace("\n", "");
                     try {
-                        library.checkout(movieName,Signature.MOVIE);
+                        library.checkout(movieName, Signature.MOVIE);
                         printer.printMessage(SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
@@ -159,7 +159,7 @@ public class BibliotecaApp {
         Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
         Movie movie1 = new Movie("3 idiots", 2009, "Rajkumar", 6);
         Movie movie2 = new Movie("The Chronicles of Narnia", 2005, "Andrew Adamson", 7);
-        List<LibraryItem> itemList = new ArrayList<>(Arrays.asList(book1,book2,movie1,movie2));
+        List<LibraryItem> itemList = new ArrayList<>(Arrays.asList(book1, book2, movie1, movie2));
         BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(itemList), new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
