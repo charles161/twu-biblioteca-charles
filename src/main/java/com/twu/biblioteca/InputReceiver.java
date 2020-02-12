@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-public interface Input {
+public interface InputReceiver {
     boolean hasNextLine();
 
     String nextLine();

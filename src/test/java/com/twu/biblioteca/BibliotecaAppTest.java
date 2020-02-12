@@ -22,14 +22,14 @@ class BibliotecaAppTest {
 
     Printer printer = mock(Printer.class);
     Library library = mock(Library.class);
-    Input input = mock(Input.class);
-    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, input);
+    InputReceiver inputReceiver = mock(InputReceiver.class);
+    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, inputReceiver);
 
     private void simulateBookNameInput(int userInput, String bookName) {
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.hasNextLine()).thenReturn(true);
-        when(input.nextLine()).thenReturn("\n", bookName);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.hasNextLine()).thenReturn(true);
+        when(inputReceiver.nextLine()).thenReturn("\n", bookName);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
     }
 
 
@@ -52,8 +52,8 @@ class BibliotecaAppTest {
     @Test
     public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() {
         int userInput = 1;
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
@@ -64,8 +64,8 @@ class BibliotecaAppTest {
     @Test
     public void shouldNotifyUserWhenAnInvalidOption100IsSelected() {
         int userInput = 100;
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
@@ -77,8 +77,8 @@ class BibliotecaAppTest {
     void shouldDisplayTheListOfBooksForAValidInputAfterAnInvalidInput() {
         int invalidInput = 7;
         int validInput = 1;
-        when(input.hasNextInt()).thenReturn(true, true, false);
-        when(input.nextInt()).thenReturn(invalidInput, validInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, true, false);
+        when(inputReceiver.nextInt()).thenReturn(invalidInput, validInput);
 
         bibliotecaApp.processUserInput();
 
@@ -90,8 +90,8 @@ class BibliotecaAppTest {
     @ExpectSystemExit
     void shouldExitTheApplicationWhen2IsTyped() {
         int userInput = 2;
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
@@ -101,8 +101,8 @@ class BibliotecaAppTest {
     @Test
     public void shouldDisplayTheEnterBookMessageWhenCheckoutBookOptionIsSelected() {
         int userInput = 3;
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
@@ -114,10 +114,10 @@ class BibliotecaAppTest {
         int userInput1 = 3;
         String bookName = "Old man and the sea";
         int userInput2 = 1;
-        when(input.hasNextInt()).thenReturn(true, true, false);
-        when(input.hasNextLine()).thenReturn(true);
-        when(input.nextLine()).thenReturn("\n", bookName);
-        when(input.nextInt()).thenReturn(userInput1, userInput2);
+        when(inputReceiver.hasNextInt()).thenReturn(true, true, false);
+        when(inputReceiver.hasNextLine()).thenReturn(true);
+        when(inputReceiver.nextLine()).thenReturn("\n", bookName);
+        when(inputReceiver.nextInt()).thenReturn(userInput1, userInput2);
 
         bibliotecaApp.processUserInput();
 
@@ -189,8 +189,8 @@ class BibliotecaAppTest {
     @Test
     void shouldDisplayTheListOfMovieDetailsIf5IsSelectedInMenu() {
         int userInput = 5;
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
@@ -201,8 +201,8 @@ class BibliotecaAppTest {
     @Test
     public void shouldDisplayTheEnterMovieMessageWhenCheckoutMovieOptionIsSelected() {
         int userInput = 6;
-        when(input.hasNextInt()).thenReturn(true, false);
-        when(input.nextInt()).thenReturn(userInput);
+        when(inputReceiver.hasNextInt()).thenReturn(true, false);
+        when(inputReceiver.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
@@ -214,10 +214,10 @@ class BibliotecaAppTest {
         int userInput1 = 6;
         String movieName = "someName";
         int userInput2 = 1;
-        when(input.hasNextInt()).thenReturn(true, true, false);
-        when(input.hasNextLine()).thenReturn(true);
-        when(input.nextLine()).thenReturn("\n", movieName);
-        when(input.nextInt()).thenReturn(userInput1, userInput2);
+        when(inputReceiver.hasNextInt()).thenReturn(true, true, false);
+        when(inputReceiver.hasNextLine()).thenReturn(true);
+        when(inputReceiver.nextLine()).thenReturn("\n", movieName);
+        when(inputReceiver.nextInt()).thenReturn(userInput1, userInput2);
 
         bibliotecaApp.processUserInput();
 

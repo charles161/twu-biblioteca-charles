@@ -2,10 +2,10 @@ package com.twu.biblioteca;
 
 import java.util.Scanner;
 
-public class InputWrapper implements Input {
+public class ConsoleInputReceiverReceiver implements InputReceiver {
     Scanner scanner;
 
-    public InputWrapper(Scanner scanner) {
+    public ConsoleInputReceiverReceiver(Scanner scanner) {
         this.scanner = scanner;
     }
 

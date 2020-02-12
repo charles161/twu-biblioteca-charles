@@ -24,13 +24,13 @@ public class BibliotecaApp {
 
     private Printer printer;
     private Library library;
-    private Input input;
+    private InputReceiver inputReceiver;
     Map<Integer, MenuOption> menuOptionMap = new HashMap<>();
 
-    public BibliotecaApp(Printer printer, Library library, Input input) {
+    public BibliotecaApp(Printer printer, Library library, InputReceiver inputReceiver) {
         this.printer = printer;
         this.library = library;
-        this.input = input;
+        this.inputReceiver = inputReceiver;
         initialiseMenu();
     }
 
@@ -66,9 +66,9 @@ public class BibliotecaApp {
             @Override
             public void onSelect() {
                 printer.printMessage(ENTER_BOOK_MESSAGE);
-                if (input.hasNextLine()) {
-                    input.nextLine();
-                    String bookName = input.nextLine().replace("\n", "");
+                if (inputReceiver.hasNextLine()) {
+                    inputReceiver.nextLine();
+                    String bookName = inputReceiver.nextLine().replace("\n", "");
                     try {
                         library.checkout(bookName, Signature.BOOK);
                         printer.printMessage(SUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
@@ -88,9 +88,9 @@ public class BibliotecaApp {
             @Override
             public void onSelect() {
                 printer.printMessage(ENTER_BOOK_MESSAGE);
-                if (input.hasNextLine()) {
-                    input.nextLine();
-                    String bookName = input.nextLine().replace("\n", "");
+                if (inputReceiver.hasNextLine()) {
+                    inputReceiver.nextLine();
+                    String bookName = inputReceiver.nextLine().replace("\n", "");
                     try {
                         library.returnLibraryItem(bookName);
                         printer.printMessage(SUCCESSFUL_RETURN_MESSAGE);
@@ -120,9 +120,9 @@ public class BibliotecaApp {
             @Override
             public void onSelect() {
                 printer.printMessage(ENTER_MOVIE_MESSAGE);
-                if (input.hasNextLine()) {
-                    input.nextLine();
-                    String movieName = input.nextLine().replace("\n", "");
+                if (inputReceiver.hasNextLine()) {
+                    inputReceiver.nextLine();
+                    String movieName = inputReceiver.nextLine().replace("\n", "");
                     try {
                         library.checkout(movieName, Signature.MOVIE);
                         printer.printMessage(SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
@@ -145,8 +145,8 @@ public class BibliotecaApp {
     }
 
     public void processUserInput() {
-        while (input.hasNextInt()) {
-            int menuOption = input.nextInt();
+        while (inputReceiver.hasNextInt()) {
+            int menuOption = inputReceiver.nextInt();
             if (menuOptionMap.containsKey(menuOption)) {
                 menuOptionMap.get(menuOption).onSelect();
             } else
@@ -160,7 +160,7 @@ public class BibliotecaApp {
         Movie movie1 = new Movie("3 idiots", 2009, "Rajkumar", 6);
         Movie movie2 = new Movie("The Chronicles of Narnia", 2005, "Andrew Adamson", 7);
         List<LibraryItem> itemList = new ArrayList<>(Arrays.asList(book1, book2, movie1, movie2));
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(itemList), new InputWrapper(new Scanner(System.in)));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(itemList), new ConsoleInputReceiverReceiver(new Scanner(System.in)));
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
         bibliotecaApp.processUserInput();
