@@ -12,8 +12,8 @@ public class BibliotecaApp {
     private static final String BOOK_LIST_HEADER = "S.no | Book Name | Author | Year of Publication";
     private static final String BOOK_LIST_TITLE = "Books Available:";
     private static final String MENU_LIST_TITLE = "Menu: (Type the corresponding number to select)";
-    private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
-    private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
+    private static final String SUCCESSFUL_BOOK_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
+    private static final String UNSUCCESSFUL_BOOK_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
     private static final String UNSUCCESSFUL_RETURN_MESSAGE = "That is not a valid book to return.";
     private static final String MOVIE_LIST_HEADER = "S.no | Name | Year | Director | Rating";
@@ -68,9 +68,9 @@ public class BibliotecaApp {
                     String bookName = input.nextLine().replace("\n", "");
                     try {
                         library.checkout(bookName,Signature.BOOK);
-                        printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
+                        printer.printMessage(SUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
-                        printer.printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
+                        printer.printMessage(UNSUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
                     }
                 }
 
