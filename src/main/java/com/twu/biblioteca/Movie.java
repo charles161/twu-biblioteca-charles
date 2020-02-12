@@ -23,4 +23,9 @@ public class Movie implements LibraryItem {
     public boolean isName(String checkName) {
         return name.equals(checkName);
     }
+
+    @Override
+    public Signature signature() {
+        return Signature.MOVIE;
+    }
 }

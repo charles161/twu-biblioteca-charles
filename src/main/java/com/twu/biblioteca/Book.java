@@ -19,4 +19,9 @@ public class Book implements LibraryItem {
     public boolean isName(String bookName) {
         return this.name.equals(bookName);
     }
+
+    @Override
+    public Signature signature() {
+        return Signature.BOOK;
+    }
 }
