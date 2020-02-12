@@ -16,6 +16,8 @@ public class BibliotecaApp {
     private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
     private static final String UNSUCCESSFUL_RETURN_MESSAGE = "That is not a valid book to return.";
+    private static final String MOVIE_LIST_HEADER = "S.no | Name | Year | Director | Rating";
+    private static final String MOVIE_LIST_TITLE = "Movies Available:";
 
     private Printer printer;
     private Library library;
@@ -38,7 +40,7 @@ public class BibliotecaApp {
 
             @Override
             public void onSelect() {
-                printer.printListItems(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.itemDetails());
+                printer.printListItems(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.itemDetails(Signature.BOOK));
             }
         });
         menuOptionMap.put(2, new MenuOption() {
@@ -95,6 +97,17 @@ public class BibliotecaApp {
                 }
             }
         });
+        menuOptionMap.put(5, new MenuOption() {
+            @Override
+            public String title() {
+                return "List of movies";
+            }
+
+            @Override
+            public void onSelect() {
+                printer.printListItems(MOVIE_LIST_TITLE, MOVIE_LIST_HEADER, library.itemDetails(Signature.MOVIE));
+            }
+        });
     }
 
     public void displayGreeting() {
@@ -118,13 +131,10 @@ public class BibliotecaApp {
     public static void main(String[] args) {
         Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
         Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
-        List<LibraryItem> bookList = new ArrayList<>() {
-            {
-                add(book1);
-                add(book2);
-            }
-        };
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(bookList), new InputWrapper(new Scanner(System.in)));
+        Movie movie1 = new Movie("3 idiots", 2009, "Rajkumar", 6);
+        Movie movie2 = new Movie("The Chronicles of Narnia", 2005, "Andrew Adamson", 7);
+        List<LibraryItem> itemList = new ArrayList<>(Arrays.asList(book1,book2,movie1,movie2));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(itemList), new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
         bibliotecaApp.processUserInput();

@@ -55,6 +55,7 @@ class BibliotecaAppTest {
 
         bibliotecaApp.processUserInput();
 
+        verify(library, times(1)).itemDetails(Signature.BOOK);
         verify(printer, times(1)).printListItems(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
     }
 
@@ -183,5 +184,15 @@ class BibliotecaAppTest {
         verify(printer, times(1)).printMessage(UNSUCCESSFUL_RETURN_MESSAGE);
     }
 
+    @Test
+    void shouldDisplayTheListOfMovieDetailsIf5IsSelectedInMenu() {
+        int userInput = 5;
+        when(input.hasNextInt()).thenReturn(true, false);
+        when(input.nextInt()).thenReturn(userInput);
 
+        bibliotecaApp.processUserInput();
+
+        verify(library, times(1)).itemDetails(Signature.MOVIE);
+        verify(printer, times(1)).printListItems(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
+    }
 }
