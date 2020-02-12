@@ -70,7 +70,7 @@ public class BibliotecaApp {
                     inputReceiver.nextLine();
                     String bookName = inputReceiver.nextLine().replace("\n", "");
                     try {
-                        library.checkout(bookName, Signature.BOOK);
+                        library.checkoutBook(bookName);
                         printer.printMessage(SUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
@@ -92,7 +92,7 @@ public class BibliotecaApp {
                     inputReceiver.nextLine();
                     String bookName = inputReceiver.nextLine().replace("\n", "");
                     try {
-                        library.returnLibraryItem(bookName);
+                        library.returnBook(bookName);
                         printer.printMessage(SUCCESSFUL_RETURN_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_RETURN_MESSAGE);
@@ -124,7 +124,7 @@ public class BibliotecaApp {
                     inputReceiver.nextLine();
                     String movieName = inputReceiver.nextLine().replace("\n", "");
                     try {
-                        library.checkout(movieName, Signature.MOVIE);
+                        library.checkoutMovie(movieName);
                         printer.printMessage(SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);

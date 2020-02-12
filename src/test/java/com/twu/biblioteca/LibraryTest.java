@@ -43,7 +43,7 @@ public class LibraryTest {
         when(book1.isName(bookName)).thenReturn(true);
         when(book1.signature()).thenReturn(Signature.BOOK);
 
-        library.checkout(bookName, Signature.BOOK);
+        library.checkoutBook(bookName);
 
         assertFalse(library.isAvailable(book1));
     }
@@ -67,7 +67,7 @@ public class LibraryTest {
         when(book1.isName(bookName)).thenReturn(true);
 
         assertFalse(library.isAvailable(book1));
-        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkout(bookName, Signature.BOOK));
+        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkoutBook(bookName));
     }
 
     @Test
@@ -78,8 +78,8 @@ public class LibraryTest {
         when(book1.isName(bookName)).thenReturn(true);
         when(book1.signature()).thenReturn(Signature.BOOK);
 
-        library.checkout(bookName, Signature.BOOK);
-        library.returnLibraryItem(bookName);
+        library.checkoutBook(bookName);
+        library.returnBook(bookName);
 
         assertTrue(library.isAvailable(book1));
     }
@@ -92,10 +92,10 @@ public class LibraryTest {
         when(book1.isName(bookName)).thenReturn(true);
         when(book1.signature()).thenReturn(Signature.BOOK);
 
-        library.checkout(bookName, Signature.BOOK);
-        library.returnLibraryItem(bookName);
+        library.checkoutBook(bookName);
+        library.returnBook(bookName);
 
-        assertThrows(LibraryItemNotAvailableException.class, () -> library.returnLibraryItem(bookName));
+        assertThrows(LibraryItemNotAvailableException.class, () -> library.returnBook(bookName));
 
     }
 
@@ -121,7 +121,7 @@ public class LibraryTest {
         when(movie.isName(movieName)).thenReturn(true);
         when(movie.signature()).thenReturn(Signature.MOVIE);
 
-        library.checkout(movieName, Signature.MOVIE);
+        library.checkoutMovie(movieName);
 
         assertFalse(library.isAvailable(movie));
     }

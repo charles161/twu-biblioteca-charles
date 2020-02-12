@@ -122,7 +122,7 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
-        verify(library, times(1)).checkout(bookName, Signature.BOOK);
+        verify(library, times(1)).checkoutBook(bookName);
     }
 
 
@@ -131,7 +131,7 @@ class BibliotecaAppTest {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doNothing().when(library).checkout(bookName, Signature.BOOK);
+        doNothing().when(library).checkoutBook(bookName);
 
         bibliotecaApp.processUserInput();
 
@@ -143,7 +143,7 @@ class BibliotecaAppTest {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doThrow(LibraryItemNotAvailableException.class).when(library).checkout(bookName, Signature.BOOK);
+        doThrow(LibraryItemNotAvailableException.class).when(library).checkoutBook(bookName);
 
         bibliotecaApp.processUserInput();
 
@@ -159,7 +159,7 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
-        verify(library, times(1)).returnLibraryItem(Mockito.anyString());
+        verify(library, times(1)).returnBook(Mockito.anyString());
     }
 
     @Test
@@ -167,7 +167,7 @@ class BibliotecaAppTest {
         int userInput1 = 4;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doNothing().when(library).returnLibraryItem(bookName);
+        doNothing().when(library).returnBook(bookName);
 
         bibliotecaApp.processUserInput();
 
@@ -179,7 +179,7 @@ class BibliotecaAppTest {
         int userInput1 = 4;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doThrow(LibraryItemNotAvailableException.class).when(library).returnLibraryItem(bookName);
+        doThrow(LibraryItemNotAvailableException.class).when(library).returnBook(bookName);
 
         bibliotecaApp.processUserInput();
 
@@ -222,15 +222,15 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_MOVIE_MESSAGE);
-        verify(library, times(1)).checkout(movieName, Signature.MOVIE);
+        verify(library, times(1)).checkoutMovie(movieName);
     }
 
     @Test
     void shouldDisplaySuccessMessageAfterSuccessfulCheckoutOfMovie() throws LibraryItemNotAvailableException {
         int userInput1 = 6;
-        String bookName = "movie";
-        simulateBookNameInput(userInput1, bookName);
-        doNothing().when(library).checkout(bookName, Signature.MOVIE);
+        String movieName = "movie";
+        simulateBookNameInput(userInput1, movieName);
+        doNothing().when(library).checkoutMovie(movieName);
 
         bibliotecaApp.processUserInput();
 
@@ -240,9 +240,9 @@ class BibliotecaAppTest {
     @Test
     void shouldDisplayErrorMessageAfterUnsuccessfulCheckoutOfMovie() throws LibraryItemNotAvailableException {
         int userInput1 = 6;
-        String bookName = "movie";
-        simulateBookNameInput(userInput1, bookName);
-        doThrow(LibraryItemNotAvailableException.class).when(library).checkout(bookName, Signature.MOVIE);
+        String movieName = "movie";
+        simulateBookNameInput(userInput1, movieName);
+        doThrow(LibraryItemNotAvailableException.class).when(library).checkoutMovie(movieName);
 
         bibliotecaApp.processUserInput();
 

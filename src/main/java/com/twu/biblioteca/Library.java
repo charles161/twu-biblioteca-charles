@@ -27,11 +27,15 @@ public class Library {
         return libraryItemListString;
     }
 
-    public void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
-        moveLibraryItem(libraryItemName, signature, itemList, checkedOutList);
+    public void checkoutBook(String bookName) throws LibraryItemNotAvailableException {
+        checkout(bookName, Signature.BOOK);
     }
 
-    public void returnLibraryItem(String libraryItemName) throws LibraryItemNotAvailableException {
+    public void checkoutMovie(String movieName) throws LibraryItemNotAvailableException {
+        checkout(movieName, Signature.MOVIE);
+    }
+
+    public void returnBook(String libraryItemName) throws LibraryItemNotAvailableException {
         moveLibraryItem(libraryItemName, Signature.BOOK, checkedOutList, itemList);
     }
 
@@ -53,5 +57,9 @@ public class Library {
 
     private boolean isEquals(Signature signature, LibraryItem libraryItem) {
         return libraryItem.signature().equals(signature);
+    }
+
+    private void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
+        moveLibraryItem(libraryItemName, signature, itemList, checkedOutList);
     }
 }
