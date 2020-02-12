@@ -40,6 +40,6 @@ class BookTest {
     void shouldReturnTheMovieSignatureAsMovie() {
         Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
 
-        assertEquals(Signature.BOOK, book.signature());
+        assertTrue(book.isSignature(Signature.BOOK));
     }
 }

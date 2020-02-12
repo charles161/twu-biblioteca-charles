@@ -41,7 +41,7 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
-        when(book1.signature()).thenReturn(Signature.BOOK);
+        when(book1.isSignature(Signature.BOOK)).thenReturn(true);
 
         library.checkoutBook(bookName);
 
@@ -76,7 +76,8 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
-        when(book1.signature()).thenReturn(Signature.BOOK);
+        when(book1.isSignature(Signature.BOOK)).thenReturn(true);
+
 
         library.checkoutBook(bookName);
         library.returnBook(bookName);
@@ -90,7 +91,8 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
-        when(book1.signature()).thenReturn(Signature.BOOK);
+        when(book1.isSignature(Signature.BOOK)).thenReturn(true);
+
 
         library.checkoutBook(bookName);
         library.returnBook(bookName);
@@ -119,7 +121,7 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(movie)));
         String movieName = "someName";
         when(movie.isName(movieName)).thenReturn(true);
-        when(movie.signature()).thenReturn(Signature.MOVIE);
+        when(movie.isSignature(Signature.MOVIE)).thenReturn(true);
 
         library.checkoutMovie(movieName);
 

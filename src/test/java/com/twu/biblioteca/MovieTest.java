@@ -41,6 +41,6 @@ class MovieTest {
     void shouldReturnTheMovieSignatureAsMovie() {
         Movie movie = new Movie("X", 1898, "Y", 1);
 
-        assertEquals(Signature.MOVIE, movie.signature());
+        assertTrue(movie.isSignature(Signature.MOVIE));
     }
 }

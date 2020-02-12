@@ -5,5 +5,5 @@ public interface LibraryItem {
 
     boolean isName(String name);
 
-    Signature signature();
+    boolean isSignature(Signature signature);
 }

@@ -25,7 +25,7 @@ public class Movie implements LibraryItem {
     }
 
     @Override
-    public Signature signature() {
-        return Signature.MOVIE;
+    public boolean isSignature(Signature signature) {
+        return Signature.MOVIE.equals(signature);
     }
 }

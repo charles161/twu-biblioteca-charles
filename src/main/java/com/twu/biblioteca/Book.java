@@ -21,7 +21,9 @@ public class Book implements LibraryItem {
     }
 
     @Override
-    public Signature signature() {
-        return Signature.BOOK;
+    public boolean isSignature(Signature signature) {
+        return Signature.BOOK.equals(signature);
     }
+
+
 }

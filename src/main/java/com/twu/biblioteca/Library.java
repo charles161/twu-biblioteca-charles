@@ -56,7 +56,7 @@ public class Library {
     }
 
     private boolean isEquals(Signature signature, LibraryItem libraryItem) {
-        return libraryItem.signature().equals(signature);
+        return libraryItem.isSignature(signature);
     }
 
     private void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
