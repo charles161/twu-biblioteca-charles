@@ -1,9 +1,18 @@
 package com.twu.biblioteca;
 
-public interface LibraryItem {
-    String columnedProperties();
+public abstract class LibraryItem {
+    Signature signature;
 
-    boolean isName(String name);
+    public LibraryItem(Signature signature) {
+        this.signature = signature;
+    }
 
-    boolean isSignature(Signature signature);
+    abstract String columnedProperties();
+
+    abstract boolean isName(String name);
+
+    boolean isSignature(Signature signature) {
+        return this.signature.equals(signature);
+    }
+
 }

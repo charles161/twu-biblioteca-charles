@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-public class Movie implements LibraryItem {
+public class Movie extends LibraryItem {
 
     private final String name;
     private final int year;
@@ -8,6 +8,7 @@ public class Movie implements LibraryItem {
     private final int rating;
 
     public Movie(String name, int year, String director, int rating) {
+        super(Signature.MOVIE);
         this.name = name;
         this.year = year;
         this.director = director;
@@ -24,8 +25,4 @@ public class Movie implements LibraryItem {
         return name.equals(checkName);
     }
 
-    @Override
-    public boolean isSignature(Signature signature) {
-        return Signature.MOVIE.equals(signature);
-    }
 }
