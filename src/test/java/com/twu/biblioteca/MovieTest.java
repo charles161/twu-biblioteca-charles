@@ -37,5 +37,10 @@ class MovieTest {
         assertFalse(movie.isName("X"));
     }
 
+    @Test
+    void shouldReturnTheMovieSignatureAsMovie() {
+        Movie movie = new Movie("X", 1898, "Y", 1);
 
+        assertEquals(Signature.MOVIE, movie.signature());
+    }
 }
