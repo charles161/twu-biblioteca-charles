@@ -59,7 +59,7 @@ public class LibraryTest {
     @Test
     void shouldBeAbleToCheckoutBookByName() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
-        Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
+        Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
 
@@ -93,7 +93,7 @@ public class LibraryTest {
     @Test
     void shouldBeAbleToReturnBookByNameSoThatItsAvailable() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
-        Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
+        Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
 
@@ -106,7 +106,7 @@ public class LibraryTest {
     @Test
     void shouldThrowExceptionWhenBookReturnedTwice() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
-        Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
+        Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
 
@@ -129,6 +129,18 @@ public class LibraryTest {
         expectedBookDetails.add(movieDetail);
 
         assertEquals(expectedBookDetails, library.itemDetails(Signature.MOVIE));
+    }
+
+    @Test
+    void shouldBeAbleToCheckoutMovieByName() throws LibraryItemNotAvailableException {
+        Movie movie = mock(Movie.class);
+        Library library = new Library(new ArrayList<>(Collections.singletonList(movie)));
+        String movieName = "someName";
+        when(movie.isName(movieName)).thenReturn(true);
+
+        library.checkout(movieName);
+
+        assertFalse(library.isAvailable(movie));
     }
 
 }
