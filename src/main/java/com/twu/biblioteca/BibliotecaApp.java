@@ -82,7 +82,7 @@ public class BibliotecaApp {
         menuOptionMap.put(4, new MenuOption() {
             @Override
             public String title() {
-                return "Return";
+                return "Return Book";
             }
 
             @Override
@@ -114,7 +114,7 @@ public class BibliotecaApp {
         menuOptionMap.put(6, new MenuOption() {
             @Override
             public String title() {
-                return "Checkout Book";
+                return "Checkout Movie";
             }
 
             @Override
