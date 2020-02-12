@@ -21,10 +21,14 @@ public class Library {
     public List<String> itemDetails(Signature signature) {
         List<String> libraryItemListString = new ArrayList<>();
         for (LibraryItem libraryItem : itemList) {
-            if (libraryItem.signature().equals(signature))
+            if (isEquals(signature, libraryItem))
                 libraryItemListString.add(libraryItem.columnedProperties());
         }
         return libraryItemListString;
+    }
+
+    private boolean isEquals(Signature signature, LibraryItem libraryItem) {
+        return libraryItem.signature().equals(signature);
     }
 
     public void checkout(String libraryItemName, Signature signature) throws LibraryItemNotAvailableException {
@@ -40,7 +44,7 @@ public class Library {
         Iterator iterator = inputList.iterator();
         while (iterator.hasNext()) {
             LibraryItem libraryItem = (LibraryItem) iterator.next();
-            if (libraryItem.isName(libraryItemName) && libraryItem.signature().equals(signature)) {
+            if (libraryItem.isName(libraryItemName) && isEquals(signature, libraryItem)) {
                 itemCheckedOut = true;
                 outputList.add(libraryItem);
                 iterator.remove();
