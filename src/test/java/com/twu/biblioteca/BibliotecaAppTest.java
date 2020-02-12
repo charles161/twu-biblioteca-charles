@@ -48,18 +48,18 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() throws LibraryItemNotAvailableException {
+    public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() {
         int userInput = 1;
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
 
-        verify(printer, times(1)).printAvailableBooks(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
+        verify(printer, times(1)).printListItems(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() throws LibraryItemNotAvailableException {
+    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() {
         int userInput = 6;
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
@@ -80,7 +80,7 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
-        verify(printer, times(1)).printAvailableBooks(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
+        verify(printer, times(1)).printListItems(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
     }
 
     @Test

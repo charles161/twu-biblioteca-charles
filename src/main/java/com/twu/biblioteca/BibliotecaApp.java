@@ -38,7 +38,7 @@ public class BibliotecaApp {
 
             @Override
             public void onSelect() {
-                printer.printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.itemDetails());
+                printer.printListItems(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.itemDetails());
             }
         });
         menuOptionMap.put(2, new MenuOption() {
@@ -115,7 +115,7 @@ public class BibliotecaApp {
         }
     }
 
-    public static void main(String[] args) throws LibraryItemNotAvailableException {
+    public static void main(String[] args) {
         Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
         Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
         List<LibraryItem> bookList = new ArrayList<>() {

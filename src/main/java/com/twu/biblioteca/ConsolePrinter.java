@@ -12,12 +12,12 @@ public class ConsolePrinter implements Printer {
     }
 
     @Override
-    public void printAvailableBooks(String title, String header, List<String> bookList) {
+    public void printListItems(String title, String header, List<String> listItems) {
         System.out.println(title);
         System.out.println();
         System.out.println(header);
         int serial = 0;
-        for (String bookDetails : bookList) {
+        for (String bookDetails : listItems) {
             System.out.println(++serial + " | " + bookDetails);
         }
         System.out.println();

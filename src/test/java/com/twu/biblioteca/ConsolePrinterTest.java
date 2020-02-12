@@ -40,7 +40,7 @@ class ConsolePrinterTest {
         String bookListString = "Book ABC";
         String expectedOutput = BOOK_LIST_TITLE + "\n\n" + BOOK_LIST_HEADER + "\n1 | " + bookListString + "\n\n";
 
-        consolePrinter.printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, Collections.singletonList(bookListString));
+        consolePrinter.printListItems(BOOK_LIST_TITLE, BOOK_LIST_HEADER, Collections.singletonList(bookListString));
 
         assertEquals(expectedOutput, outContent.toString());
     }
