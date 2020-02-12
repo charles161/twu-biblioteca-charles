@@ -76,7 +76,7 @@ public class LibraryTest {
         List<String> expectedBookDetails = new ArrayList<>();
         expectedBookDetails.add(bookDetail);
 
-        assertEquals(expectedBookDetails, library.itemDetails());
+        assertEquals(expectedBookDetails, library.itemDetails(Signature.BOOK));
     }
 
     @Test
@@ -115,6 +115,20 @@ public class LibraryTest {
 
         assertThrows(LibraryItemNotAvailableException.class, () -> library.returnLibraryItem(bookName));
 
+    }
+
+    @Test
+    void shouldReturnAListOfMovieDetails() {
+        Movie movie = new Movie("X", 1898, "Y", 1);
+        Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
+
+        Library library = new Library(new ArrayList<>(Arrays.asList(movie, book)));
+        String movieDetail = "X | 1898 | Y | 1";
+
+        List<String> expectedBookDetails = new ArrayList<>();
+        expectedBookDetails.add(movieDetail);
+
+        assertEquals(expectedBookDetails, library.itemDetails(Signature.MOVIE));
     }
 
 }

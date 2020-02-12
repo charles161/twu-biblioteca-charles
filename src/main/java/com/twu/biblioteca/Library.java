@@ -37,10 +37,11 @@ public class Library {
         itemList.removeIf(book -> book.isName(bookName));
     }
 
-    public List<String> itemDetails() {
+    public List<String> itemDetails(Signature signature) {
         List<String> bookListString = new ArrayList<>();
         for (LibraryItem libraryItem : itemList) {
-            bookListString.add(libraryItem.columnedProperties());
+            if (libraryItem.signature().equals(signature))
+                bookListString.add(libraryItem.columnedProperties());
         }
         return bookListString;
     }
