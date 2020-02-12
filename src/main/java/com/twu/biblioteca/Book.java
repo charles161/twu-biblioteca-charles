@@ -15,15 +15,7 @@ public class Book {
         this.yearOfPublication = yearOfPublication;
     }
 
-    public static List<String> buildList(List<Book> bookList) {
-        List<String> bookListString = new ArrayList<>();
-        for (Book book : bookList) {
-            bookListString.add(columnedProperties(book));
-        }
-        return bookListString;
-    }
-
-    private static String columnedProperties(Book book) {
+    public static String columnedProperties(Book book) {
         return book.name + " | " + book.author + " | " + book.yearOfPublication;
     }
 

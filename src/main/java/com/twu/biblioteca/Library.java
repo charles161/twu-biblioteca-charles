@@ -39,7 +39,11 @@ public class Library {
     }
 
     public List<String> availableBooksDetail() {
-        return Book.buildList(bookList);
+        List<String> bookListString = new ArrayList<>();
+        for (Book book : bookList) {
+            bookListString.add(Book.columnedProperties(book));
+        }
+        return bookListString;
     }
 
     public void returnBook(String bookName) throws BookNotAvailableException {

@@ -14,14 +14,12 @@ class BookTest {
         Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
 
         String bookDetail = "Sherlock Holmes | Sir Arthur Conan Doyle | 1999";
-        List<String> bookList = new ArrayList<>();
-        bookList.add(bookDetail);
 
-        assertEquals(bookList, Book.buildList(Collections.singletonList(book)));
+        assertEquals(bookDetail, Book.columnedProperties(book));
     }
 
     @Test
-    void shouldReturnTrueIfBookNameMatchesWithTheString(){
+    void shouldReturnTrueIfBookNameMatchesWithTheString() {
         Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
 
         String bookName = "Sherlock Holmes";
@@ -30,7 +28,7 @@ class BookTest {
     }
 
     @Test
-    void shouldReturnFalseIfBookNameDoesNotMatchWithTheString(){
+    void shouldReturnFalseIfBookNameDoesNotMatchWithTheString() {
         Book book = new Book("Sherlock Holmes", "Sir Arthur Conan Doyle", 1999);
 
         String bookName = "Sherlock Conan";
