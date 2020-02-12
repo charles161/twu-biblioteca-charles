@@ -12,11 +12,13 @@ class BibliotecaAppTest {
     private static final String GREETING_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static final String ERROR_MESSAGE = "Please select a valid option!";
     private static final String ENTER_BOOK_MESSAGE = "Please enter a book name";
-    private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
-    private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
+    private static final String SUCCESSFUL_BOOK_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
+    private static final String UNSUCCESSFUL_BOOK_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
     private static final String UNSUCCESSFUL_RETURN_MESSAGE = "That is not a valid book to return.";
-
+    private static final String ENTER_MOVIE_MESSAGE = "Please enter a movie name";
+    private static final String SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE = "Thank you! Enjoy the movie";
+    private static final String UNSUCCESSFUL_MOVIE_CHECKOUT_MESSAGE = "Sorry, that movie is not available";
 
     Printer printer = mock(Printer.class);
     Library library = mock(Library.class);
@@ -97,7 +99,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected() {
+    public void shouldDisplayTheEnterBookMessageWhenCheckoutBookOptionIsSelected() {
         int userInput = 3;
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
@@ -133,7 +135,7 @@ class BibliotecaAppTest {
 
         bibliotecaApp.processUserInput();
 
-        verify(printer, times(1)).printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
+        verify(printer, times(1)).printMessage(SUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
     }
 
     @Test
@@ -145,7 +147,7 @@ class BibliotecaAppTest {
 
         bibliotecaApp.processUserInput();
 
-        verify(printer, times(1)).printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
+        verify(printer, times(1)).printMessage(UNSUCCESSFUL_BOOK_CHECKOUT_MESSAGE);
     }
 
     @Test
@@ -194,5 +196,56 @@ class BibliotecaAppTest {
 
         verify(library, times(1)).itemDetails(Signature.MOVIE);
         verify(printer, times(1)).printListItems(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
+    }
+
+    @Test
+    public void shouldDisplayTheEnterMovieMessageWhenCheckoutMovieOptionIsSelected() {
+        int userInput = 6;
+        when(input.hasNextInt()).thenReturn(true, false);
+        when(input.nextInt()).thenReturn(userInput);
+
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(ENTER_MOVIE_MESSAGE);
+    }
+
+    @Test
+    public void shouldCheckoutAMovieWhenNameIsEntered() throws LibraryItemNotAvailableException {
+        int userInput1 = 6;
+        String movieName = "someName";
+        int userInput2 = 1;
+        when(input.hasNextInt()).thenReturn(true, true, false);
+        when(input.hasNextLine()).thenReturn(true);
+        when(input.nextLine()).thenReturn("\n", movieName);
+        when(input.nextInt()).thenReturn(userInput1, userInput2);
+
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(ENTER_MOVIE_MESSAGE);
+        verify(library, times(1)).checkout(movieName,Signature.MOVIE);
+    }
+
+    @Test
+    void shouldDisplaySuccessMessageAfterSuccessfulCheckoutOfMovie() throws LibraryItemNotAvailableException {
+        int userInput1 = 6;
+        String bookName = "movie";
+        simulateBookNameInput(userInput1, bookName);
+        doNothing().when(library).checkout(bookName,Signature.MOVIE);
+
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
+    }
+
+    @Test
+    void shouldDisplayErrorMessageAfterUnsuccessfulCheckoutOfMovie() throws LibraryItemNotAvailableException {
+        int userInput1 = 6;
+        String bookName = "movie";
+        simulateBookNameInput(userInput1, bookName);
+        doThrow(LibraryItemNotAvailableException.class).when(library).checkout(bookName,Signature.MOVIE);
+
+        bibliotecaApp.processUserInput();
+
+        verify(printer, times(1)).printMessage(UNSUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
     }
 }

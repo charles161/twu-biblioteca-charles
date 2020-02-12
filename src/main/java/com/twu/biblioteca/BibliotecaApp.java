@@ -18,6 +18,9 @@ public class BibliotecaApp {
     private static final String UNSUCCESSFUL_RETURN_MESSAGE = "That is not a valid book to return.";
     private static final String MOVIE_LIST_HEADER = "S.no | Name | Year | Director | Rating";
     private static final String MOVIE_LIST_TITLE = "Movies Available:";
+    private static final String ENTER_MOVIE_MESSAGE = "Please enter a movie name";
+    private static final String SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE = "Thank you! Enjoy the movie";
+    private static final String UNSUCCESSFUL_MOVIE_CHECKOUT_MESSAGE = "Sorry, that movie is not available";
 
     private Printer printer;
     private Library library;
@@ -108,6 +111,29 @@ public class BibliotecaApp {
                 printer.printListItems(MOVIE_LIST_TITLE, MOVIE_LIST_HEADER, library.itemDetails(Signature.MOVIE));
             }
         });
+        menuOptionMap.put(6, new MenuOption() {
+            @Override
+            public String title() {
+                return "Checkout Book";
+            }
+
+            @Override
+            public void onSelect() {
+                printer.printMessage(ENTER_MOVIE_MESSAGE);
+                if (input.hasNextLine()) {
+                    input.nextLine();
+                    String movieName = input.nextLine().replace("\n", "");
+                    try {
+                        library.checkout(movieName,Signature.MOVIE);
+                        printer.printMessage(SUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
+                    } catch (LibraryItemNotAvailableException e) {
+                        printer.printMessage(UNSUCCESSFUL_MOVIE_CHECKOUT_MESSAGE);
+                    }
+                }
+
+            }
+        });
+
     }
 
     public void displayGreeting() {
