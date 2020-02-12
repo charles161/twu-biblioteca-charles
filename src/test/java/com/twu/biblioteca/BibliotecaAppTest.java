@@ -8,7 +8,6 @@ import org.mockito.Mockito;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -27,7 +26,7 @@ class BibliotecaAppTest {
 
     Printer printer = mock(Printer.class);
     Library library = mock(Library.class);
-    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+    BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
 
 
     @Test
@@ -52,7 +51,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printAvailableBooks(Mockito.anyString(), Mockito.anyString(), Mockito.anyList());
@@ -64,7 +63,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
@@ -78,7 +77,7 @@ class BibliotecaAppTest {
         InputStream inputStream1 = new ByteArrayInputStream((invalidInput + "\n" + validInput).getBytes());
 
         System.setIn(inputStream1);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printErrorMessage(ERROR_MESSAGE);
@@ -92,7 +91,7 @@ class BibliotecaAppTest {
         InputStream inputStream1 = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream1);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(0)).printErrorMessage(ERROR_MESSAGE);
@@ -104,7 +103,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream(Integer.toString(userInput).getBytes());
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
@@ -123,7 +122,7 @@ class BibliotecaAppTest {
         when(library.availableBooksDetail()).thenReturn(bookDetails);
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
@@ -137,7 +136,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
@@ -152,7 +151,7 @@ class BibliotecaAppTest {
         doNothing().when(library).checkout(bookName);
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
@@ -166,7 +165,7 @@ class BibliotecaAppTest {
         doThrow(BookNotAvailableException.class).when(library).checkout(bookName);
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
@@ -179,7 +178,7 @@ class BibliotecaAppTest {
         InputStream inputStream = new ByteArrayInputStream((userInput1 + "\n" + bookName).getBytes());
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
@@ -194,7 +193,7 @@ class BibliotecaAppTest {
         doNothing().when(library).returnBook(bookName);
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(SUCCESSFUL_RETURN_MESSAGE);
@@ -208,7 +207,7 @@ class BibliotecaAppTest {
         doThrow(BookNotAvailableException.class).when(library).returnBook(bookName);
 
         System.setIn(inputStream);
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(printer, library, new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(UNSUCCESSFUL_RETURN_MESSAGE);

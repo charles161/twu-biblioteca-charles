@@ -17,16 +17,15 @@ public class BibliotecaApp {
     private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
     private static final String UNSUCCESSFUL_RETURN_MESSAGE = "Sorry, that book is not available";
 
-
     private Printer printer;
     private Library library;
-    private Scanner scanner;
+    private Input input;
     Map<Integer, MenuOption> menuOptionMap = new HashMap<>();
 
-    public BibliotecaApp(Printer printer, Library library, Scanner scanner) {
+    public BibliotecaApp(Printer printer, Library library, Input input) {
         this.printer = printer;
         this.library = library;
-        this.scanner = scanner;
+        this.input = input;
         initialiseMenu();
     }
 
@@ -62,10 +61,10 @@ public class BibliotecaApp {
             @Override
             public void onSelect() {
                 printer.printMessage(ENTER_BOOK_MESSAGE);
-                if (scanner.hasNextLine()) {
-                    if (scanner.hasNext()) {
-                        scanner.nextLine();
-                        String bookName = scanner.nextLine().replace("\n", "");
+                if (input.hasNextLine()) {
+                    if (input.hasNext()) {
+                        input.nextLine();
+                        String bookName = input.nextLine().replace("\n", "");
                         try {
                             library.checkout(bookName);
                             printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
@@ -85,10 +84,10 @@ public class BibliotecaApp {
             @Override
             public void onSelect() {
                 printer.printMessage(ENTER_BOOK_MESSAGE);
-                if (scanner.hasNextLine()) {
-                    if (scanner.hasNext()) {
-                        scanner.nextLine();
-                        String bookName = scanner.nextLine().replace("\n", "");
+                if (input.hasNextLine()) {
+                    if (input.hasNext()) {
+                        input.nextLine();
+                        String bookName = input.nextLine().replace("\n", "");
                         try {
                             library.returnBook(bookName);
                             printer.printMessage(SUCCESSFUL_RETURN_MESSAGE);
@@ -110,8 +109,8 @@ public class BibliotecaApp {
     }
 
     public void processUserInput() {
-        while (scanner.hasNextInt()) {
-            int menuOption = scanner.nextInt();
+        while (input.hasNextInt()) {
+            int menuOption = input.nextInt();
             if (menuOptionMap.containsKey(menuOption)) {
                 menuOptionMap.get(menuOption).onSelect();
             } else
@@ -128,7 +127,7 @@ public class BibliotecaApp {
                 add(book2);
             }
         };
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(bookList), new Scanner(System.in));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(bookList), new InputWrapper(new Scanner(System.in)));
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
         bibliotecaApp.processUserInput();
