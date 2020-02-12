@@ -60,8 +60,8 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() {
-        int userInput = 6;
+    public void shouldNotifyUserWhenAnInvalidOption100IsSelected() {
+        int userInput = 100;
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
 
@@ -120,7 +120,7 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
-        verify(library, times(1)).checkout(Mockito.anyString());
+        verify(library, times(1)).checkout(bookName,Signature.BOOK);
     }
 
 
@@ -129,7 +129,7 @@ class BibliotecaAppTest {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doNothing().when(library).checkout(bookName);
+        doNothing().when(library).checkout(bookName,Signature.BOOK);
 
         bibliotecaApp.processUserInput();
 
@@ -141,7 +141,7 @@ class BibliotecaAppTest {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doThrow(LibraryItemNotAvailableException.class).when(library).checkout(bookName);
+        doThrow(LibraryItemNotAvailableException.class).when(library).checkout(bookName,Signature.BOOK);
 
         bibliotecaApp.processUserInput();
 

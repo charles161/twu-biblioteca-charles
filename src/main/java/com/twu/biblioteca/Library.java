@@ -3,6 +3,7 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.Exceptions.LibraryItemNotAvailableException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Library {
@@ -13,49 +14,47 @@ public class Library {
         this.itemList = itemList;
     }
 
-    public boolean isAvailable(LibraryItem book) {
-        return itemList.contains(book);
+    public boolean isAvailable(LibraryItem libraryItem) {
+        return itemList.contains(libraryItem);
     }
 
-    public void checkout(LibraryItem checkoutLibraryItem) throws LibraryItemNotAvailableException {
-        if (isAvailable(checkoutLibraryItem))
-            itemList.remove(checkoutLibraryItem);
-        else
-            throw new LibraryItemNotAvailableException();
-    }
-
-    public void checkout(String bookName) throws LibraryItemNotAvailableException {
-        boolean bookAvailable = false;
-        for (LibraryItem libraryItem : itemList) {
-            if (libraryItem.isName(bookName)) {
+    public void checkout(String libraryItemName,Signature signature) throws LibraryItemNotAvailableException {
+        boolean itemCheckedOut = false;
+        Iterator iterator = itemList.iterator();
+        while (iterator.hasNext())
+        {
+            LibraryItem libraryItem = (LibraryItem)iterator.next();
+            if (libraryItem.isName(libraryItemName) && libraryItem.signature().equals(signature))
+            {
+                itemCheckedOut = true;
                 checkedOutList.add(libraryItem);
-                bookAvailable = true;
+                iterator.remove();
+                break;
             }
         }
-        if (!bookAvailable)
-            throw new LibraryItemNotAvailableException();
-        itemList.removeIf(book -> book.isName(bookName));
+        if(!itemCheckedOut)
+        throw new LibraryItemNotAvailableException();
     }
 
     public List<String> itemDetails(Signature signature) {
-        List<String> bookListString = new ArrayList<>();
+        List<String> libraryItemListString = new ArrayList<>();
         for (LibraryItem libraryItem : itemList) {
             if (libraryItem.signature().equals(signature))
-                bookListString.add(libraryItem.columnedProperties());
+                libraryItemListString.add(libraryItem.columnedProperties());
         }
-        return bookListString;
+        return libraryItemListString;
     }
 
     public void returnLibraryItem(String itemName) throws LibraryItemNotAvailableException {
-        boolean bookAvailable = false;
-        for (LibraryItem book : checkedOutList) {
-            if (book.isName(itemName)) {
-                itemList.add(book);
-                bookAvailable = true;
+        boolean libraryItemAvailable = false;
+        for (LibraryItem libraryItem : checkedOutList) {
+            if (libraryItem.isName(itemName)) {
+                itemList.add(libraryItem);
+                libraryItemAvailable = true;
             }
         }
-        if (!bookAvailable)
+        if (!libraryItemAvailable)
             throw new LibraryItemNotAvailableException();
-        checkedOutList.removeIf(book -> book.isName(itemName));
+        checkedOutList.removeIf(libraryItem -> libraryItem.isName(itemName));
     }
 }

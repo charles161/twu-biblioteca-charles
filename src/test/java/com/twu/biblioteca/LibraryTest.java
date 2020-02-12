@@ -36,34 +36,14 @@ public class LibraryTest {
     }
 
     @Test
-    void shouldBeAbleToCheckoutABookIfItIsAvailable() throws LibraryItemNotAvailableException {
-        Book book1 = mock(Book.class);
-
-        Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
-
-        assertTrue(library.isAvailable(book1));
-        library.checkout(book1);
-        assertFalse(library.isAvailable(book1));
-    }
-
-    @Test
-    void shouldThrowExceptionWhenCheckingOutABookThatIsUnavailable() {
-        Book book1 = mock(Book.class);
-
-        Library library = new Library(new ArrayList<>());
-
-        assertFalse(library.isAvailable(book1));
-        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkout(book1));
-    }
-
-    @Test
     void shouldBeAbleToCheckoutBookByName() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
+        when(book1.signature()).thenReturn(Signature.BOOK);
 
-        library.checkout(bookName);
+        library.checkout(bookName,Signature.BOOK);
 
         assertFalse(library.isAvailable(book1));
     }
@@ -87,7 +67,7 @@ public class LibraryTest {
         when(book1.isName(bookName)).thenReturn(true);
 
         assertFalse(library.isAvailable(book1));
-        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkout(bookName));
+        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkout(bookName,Signature.BOOK));
     }
 
     @Test
@@ -96,8 +76,9 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
+        when(book1.signature()).thenReturn(Signature.BOOK);
 
-        library.checkout(bookName);
+        library.checkout(bookName,Signature.BOOK);
         library.returnLibraryItem(bookName);
 
         assertTrue(library.isAvailable(book1));
@@ -109,8 +90,9 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
+        when(book1.signature()).thenReturn(Signature.BOOK);
 
-        library.checkout(bookName);
+        library.checkout(bookName,Signature.BOOK);
         library.returnLibraryItem(bookName);
 
         assertThrows(LibraryItemNotAvailableException.class, () -> library.returnLibraryItem(bookName));
@@ -137,8 +119,9 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>(Collections.singletonList(movie)));
         String movieName = "someName";
         when(movie.isName(movieName)).thenReturn(true);
+        when(movie.signature()).thenReturn(Signature.MOVIE);
 
-        library.checkout(movieName);
+        library.checkout(movieName,Signature.MOVIE);
 
         assertFalse(library.isAvailable(movie));
     }

@@ -57,7 +57,7 @@ public class BibliotecaApp {
         menuOptionMap.put(3, new MenuOption() {
             @Override
             public String title() {
-                return "Checkout";
+                return "Checkout Book";
             }
 
             @Override
@@ -67,7 +67,7 @@ public class BibliotecaApp {
                     input.nextLine();
                     String bookName = input.nextLine().replace("\n", "");
                     try {
-                        library.checkout(bookName);
+                        library.checkout(bookName,Signature.BOOK);
                         printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
                     } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
