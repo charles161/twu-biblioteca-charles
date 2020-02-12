@@ -1,9 +1,6 @@
 package com.twu.biblioteca;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Book {
+public class Book implements LibraryItem {
 
     private final String name;
     private final String author;
@@ -15,8 +12,8 @@ public class Book {
         this.yearOfPublication = yearOfPublication;
     }
 
-    public static String columnedProperties(Book book) {
-        return book.name + " | " + book.author + " | " + book.yearOfPublication;
+    public String columnedProperties() {
+        return name + " | " + author + " | " + yearOfPublication;
     }
 
     public boolean isName(String bookName) {

@@ -15,7 +15,7 @@ class BookTest {
 
         String bookDetail = "Sherlock Holmes | Sir Arthur Conan Doyle | 1999";
 
-        assertEquals(bookDetail, Book.columnedProperties(book));
+        assertEquals(bookDetail, book.columnedProperties());
     }
 
     @Test

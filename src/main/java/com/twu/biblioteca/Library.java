@@ -41,7 +41,7 @@ public class Library {
     public List<String> availableBooksDetail() {
         List<String> bookListString = new ArrayList<>();
         for (Book book : bookList) {
-            bookListString.add(Book.columnedProperties(book));
+            bookListString.add(book.columnedProperties());
         }
         return bookListString;
     }
