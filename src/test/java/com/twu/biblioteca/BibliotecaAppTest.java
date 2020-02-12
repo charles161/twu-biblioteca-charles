@@ -1,7 +1,7 @@
 package com.twu.biblioteca;
 
 import com.ginsberg.junit.exit.ExpectSystemExit;
-import com.twu.biblioteca.Exceptions.BookNotAvailableException;
+import com.twu.biblioteca.Exceptions.LibraryItemNotAvailableException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -48,7 +48,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() throws BookNotAvailableException {
+    public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() throws LibraryItemNotAvailableException {
         int userInput = 1;
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
@@ -59,7 +59,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() throws BookNotAvailableException {
+    public void shouldNotifyUserWhenAnInvalidOption6IsSelected() throws LibraryItemNotAvailableException {
         int userInput = 6;
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
@@ -107,7 +107,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    public void shouldCheckoutABookWhenNameIsEntered() throws BookNotAvailableException {
+    public void shouldCheckoutABookWhenNameIsEntered() throws LibraryItemNotAvailableException {
         int userInput1 = 3;
         String bookName = "Old man and the sea";
         int userInput2 = 1;
@@ -124,7 +124,7 @@ class BibliotecaAppTest {
 
 
     @Test
-    void shouldDisplaySuccessMessageAfterSuccessfulCheckout() throws BookNotAvailableException {
+    void shouldDisplaySuccessMessageAfterSuccessfulCheckout() throws LibraryItemNotAvailableException {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
@@ -136,11 +136,11 @@ class BibliotecaAppTest {
     }
 
     @Test
-    void shouldDisplayErrorMessageAfterUnsuccessfulCheckout() throws BookNotAvailableException {
+    void shouldDisplayErrorMessageAfterUnsuccessfulCheckout() throws LibraryItemNotAvailableException {
         int userInput1 = 3;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doThrow(BookNotAvailableException.class).when(library).checkout(bookName);
+        doThrow(LibraryItemNotAvailableException.class).when(library).checkout(bookName);
 
         bibliotecaApp.processUserInput();
 
@@ -148,7 +148,7 @@ class BibliotecaAppTest {
     }
 
     @Test
-    void shouldBeAbleToReturnABookWhenABookNameIsEntered() throws BookNotAvailableException {
+    void shouldBeAbleToReturnABookWhenABookNameIsEntered() throws LibraryItemNotAvailableException {
         int userInput1 = 4;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
@@ -156,15 +156,15 @@ class BibliotecaAppTest {
         bibliotecaApp.processUserInput();
 
         verify(printer, times(1)).printMessage(ENTER_BOOK_MESSAGE);
-        verify(library, times(1)).returnBook(Mockito.anyString());
+        verify(library, times(1)).returnLibraryItem(Mockito.anyString());
     }
 
     @Test
-    void shouldDisplaySuccessMessageAfterSuccessfulReturn() throws BookNotAvailableException {
+    void shouldDisplaySuccessMessageAfterSuccessfulReturn() throws LibraryItemNotAvailableException {
         int userInput1 = 4;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doNothing().when(library).returnBook(bookName);
+        doNothing().when(library).returnLibraryItem(bookName);
 
         bibliotecaApp.processUserInput();
 
@@ -172,11 +172,11 @@ class BibliotecaAppTest {
     }
 
     @Test
-    void shouldDisplayErrorMessageAfterUnsuccessfulReturn() throws BookNotAvailableException {
+    void shouldDisplayErrorMessageAfterUnsuccessfulReturn() throws LibraryItemNotAvailableException {
         int userInput1 = 4;
         String bookName = "To Kill A Mocking Bird";
         simulateBookNameInput(userInput1, bookName);
-        doThrow(BookNotAvailableException.class).when(library).returnBook(bookName);
+        doThrow(LibraryItemNotAvailableException.class).when(library).returnLibraryItem(bookName);
 
         bibliotecaApp.processUserInput();
 

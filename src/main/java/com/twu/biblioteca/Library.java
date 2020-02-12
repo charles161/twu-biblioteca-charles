@@ -1,61 +1,60 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.Exceptions.BookAlreadyReturnedException;
-import com.twu.biblioteca.Exceptions.BookNotAvailableException;
+import com.twu.biblioteca.Exceptions.LibraryItemNotAvailableException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    private List<Book> bookList;
-    private List<Book> checkedOutList = new ArrayList<>();
+    private List<LibraryItem> itemList;
+    private List<LibraryItem> checkedOutList = new ArrayList<>();
 
-    public Library(List<Book> bookList) {
-        this.bookList = bookList;
+    public Library(List<LibraryItem> itemList) {
+        this.itemList = itemList;
     }
 
-    public boolean isAvailable(Book book) {
-        return bookList.contains(book);
+    public boolean isAvailable(LibraryItem book) {
+        return itemList.contains(book);
     }
 
-    public void checkout(Book checkoutBook) throws BookNotAvailableException {
-        if (isAvailable(checkoutBook))
-            bookList.remove(checkoutBook);
+    public void checkout(LibraryItem checkoutLibraryItem) throws LibraryItemNotAvailableException {
+        if (isAvailable(checkoutLibraryItem))
+            itemList.remove(checkoutLibraryItem);
         else
-            throw new BookNotAvailableException();
+            throw new LibraryItemNotAvailableException();
     }
 
-    public void checkout(String bookName) throws BookNotAvailableException {
+    public void checkout(String bookName) throws LibraryItemNotAvailableException {
         boolean bookAvailable = false;
-        for (Book book : bookList) {
-            if (book.isName(bookName)) {
-                checkedOutList.add(book);
+        for (LibraryItem libraryItem : itemList) {
+            if (libraryItem.isName(bookName)) {
+                checkedOutList.add(libraryItem);
                 bookAvailable = true;
             }
         }
         if (!bookAvailable)
-            throw new BookNotAvailableException();
-        bookList.removeIf(book -> book.isName(bookName));
+            throw new LibraryItemNotAvailableException();
+        itemList.removeIf(book -> book.isName(bookName));
     }
 
-    public List<String> availableBooksDetail() {
+    public List<String> itemDetails() {
         List<String> bookListString = new ArrayList<>();
-        for (Book book : bookList) {
-            bookListString.add(book.columnedProperties());
+        for (LibraryItem libraryItem : itemList) {
+            bookListString.add(libraryItem.columnedProperties());
         }
         return bookListString;
     }
 
-    public void returnBook(String bookName) throws BookNotAvailableException {
+    public void returnLibraryItem(String itemName) throws LibraryItemNotAvailableException {
         boolean bookAvailable = false;
-        for (Book book : checkedOutList) {
-            if (book.isName(bookName)) {
-                bookList.add(book);
+        for (LibraryItem book : checkedOutList) {
+            if (book.isName(itemName)) {
+                itemList.add(book);
                 bookAvailable = true;
             }
         }
         if (!bookAvailable)
-            throw new BookNotAvailableException();
-        checkedOutList.removeIf(book -> book.isName(bookName));
+            throw new LibraryItemNotAvailableException();
+        checkedOutList.removeIf(book -> book.isName(itemName));
     }
 }

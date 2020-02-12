@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.Exceptions.BookNotAvailableException;
+import com.twu.biblioteca.Exceptions.LibraryItemNotAvailableException;
 
 import java.util.*;
 
@@ -38,7 +38,7 @@ public class BibliotecaApp {
 
             @Override
             public void onSelect() {
-                printer.printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.availableBooksDetail());
+                printer.printAvailableBooks(BOOK_LIST_TITLE, BOOK_LIST_HEADER, library.itemDetails());
             }
         });
         menuOptionMap.put(2, new MenuOption() {
@@ -67,7 +67,7 @@ public class BibliotecaApp {
                     try {
                         library.checkout(bookName);
                         printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
-                    } catch (BookNotAvailableException e) {
+                    } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
                     }
                 }
@@ -87,9 +87,9 @@ public class BibliotecaApp {
                     input.nextLine();
                     String bookName = input.nextLine().replace("\n", "");
                     try {
-                        library.returnBook(bookName);
+                        library.returnLibraryItem(bookName);
                         printer.printMessage(SUCCESSFUL_RETURN_MESSAGE);
-                    } catch (BookNotAvailableException e) {
+                    } catch (LibraryItemNotAvailableException e) {
                         printer.printMessage(UNSUCCESSFUL_RETURN_MESSAGE);
                     }
                 }
@@ -115,10 +115,10 @@ public class BibliotecaApp {
         }
     }
 
-    public static void main(String[] args) throws BookNotAvailableException {
+    public static void main(String[] args) throws LibraryItemNotAvailableException {
         Book book1 = new Book("Old man and the sea", "Earnest Hemingway", 2012);
         Book book2 = new Book("To Kill A Mocking Bird", "Harper Collins", 2013);
-        List<Book> bookList = new ArrayList<>() {
+        List<LibraryItem> bookList = new ArrayList<>() {
             {
                 add(book1);
                 add(book2);

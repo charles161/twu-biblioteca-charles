@@ -1,7 +1,6 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.Exceptions.BookAlreadyReturnedException;
-import com.twu.biblioteca.Exceptions.BookNotAvailableException;
+import com.twu.biblioteca.Exceptions.LibraryItemNotAvailableException;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class LibraryTest {
     }
 
     @Test
-    void shouldBeAbleToCheckoutABookIfItIsAvailable() throws BookNotAvailableException {
+    void shouldBeAbleToCheckoutABookIfItIsAvailable() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
 
         Library library = new Library(new ArrayList<>(Collections.singletonList(book1)));
@@ -54,11 +53,11 @@ public class LibraryTest {
         Library library = new Library(new ArrayList<>());
 
         assertFalse(library.isAvailable(book1));
-        assertThrows(BookNotAvailableException.class, () -> library.checkout(book1));
+        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkout(book1));
     }
 
     @Test
-    void shouldBeAbleToCheckoutBookByName() throws BookNotAvailableException {
+    void shouldBeAbleToCheckoutBookByName() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
         Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
         String bookName = "someName";
@@ -77,7 +76,7 @@ public class LibraryTest {
         List<String> expectedBookDetails = new ArrayList<>();
         expectedBookDetails.add(bookDetail);
 
-        assertEquals(expectedBookDetails, library.availableBooksDetail());
+        assertEquals(expectedBookDetails, library.itemDetails());
     }
 
     @Test
@@ -88,35 +87,34 @@ public class LibraryTest {
         when(book1.isName(bookName)).thenReturn(true);
 
         assertFalse(library.isAvailable(book1));
-        assertThrows(BookNotAvailableException.class, () -> library.checkout(bookName));
+        assertThrows(LibraryItemNotAvailableException.class, () -> library.checkout(bookName));
     }
 
     @Test
-    void shouldBeAbleToReturnBookByNameSoThatItsAvailable() throws BookNotAvailableException, BookAlreadyReturnedException {
+    void shouldBeAbleToReturnBookByNameSoThatItsAvailable() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
         Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
 
         library.checkout(bookName);
-        library.returnBook(bookName);
+        library.returnLibraryItem(bookName);
 
         assertTrue(library.isAvailable(book1));
     }
 
     @Test
-    void shouldThrowExceptionWhenBookReturnedTwice() throws BookNotAvailableException {
+    void shouldThrowExceptionWhenBookReturnedTwice() throws LibraryItemNotAvailableException {
         Book book1 = mock(Book.class);
         Library library = new Library(new ArrayList<>(Arrays.asList(book1)));
         String bookName = "someName";
         when(book1.isName(bookName)).thenReturn(true);
 
         library.checkout(bookName);
-        library.returnBook(bookName);
+        library.returnLibraryItem(bookName);
 
-        assertThrows(BookNotAvailableException.class, () -> library.returnBook(bookName));
+        assertThrows(LibraryItemNotAvailableException.class, () -> library.returnLibraryItem(bookName));
 
     }
-
 
 }
