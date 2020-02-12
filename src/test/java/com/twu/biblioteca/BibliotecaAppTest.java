@@ -15,7 +15,7 @@ class BibliotecaAppTest {
     private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
     private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
-    private static final String UNSUCCESSFUL_RETURN_MESSAGE = "Sorry, that book is not available";
+    private static final String UNSUCCESSFUL_RETURN_MESSAGE = "That is not a valid book to return.";
 
 
     Printer printer = mock(Printer.class);
@@ -26,7 +26,6 @@ class BibliotecaAppTest {
     private void simulateBookNameInput(int userInput, String bookName) {
         when(input.hasNextInt()).thenReturn(true, false);
         when(input.hasNextLine()).thenReturn(true);
-        when(input.hasNext()).thenReturn(true);
         when(input.nextLine()).thenReturn("\n", bookName);
         when(input.nextInt()).thenReturn(userInput);
     }
@@ -51,7 +50,7 @@ class BibliotecaAppTest {
     @Test
     public void shouldBeAbleToViewTheListOfBooksAvailableAfterTypingOneInMenu() throws BookNotAvailableException {
         int userInput = 1;
-        when(input.hasNextInt()).thenReturn(true,false);
+        when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
@@ -62,7 +61,7 @@ class BibliotecaAppTest {
     @Test
     public void shouldNotifyUserWhenAnInvalidOption6IsSelected() throws BookNotAvailableException {
         int userInput = 6;
-        when(input.hasNextInt()).thenReturn(true,false);
+        when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
@@ -75,8 +74,8 @@ class BibliotecaAppTest {
     void shouldDisplayTheListOfBooksForAValidInputAfterAnInvalidInput() {
         int invalidInput = 7;
         int validInput = 1;
-        when(input.hasNextInt()).thenReturn(true,true,false);
-        when(input.nextInt()).thenReturn(invalidInput,validInput);
+        when(input.hasNextInt()).thenReturn(true, true, false);
+        when(input.nextInt()).thenReturn(invalidInput, validInput);
 
         bibliotecaApp.processUserInput();
 
@@ -88,7 +87,7 @@ class BibliotecaAppTest {
     @ExpectSystemExit
     void shouldExitTheApplicationWhen2IsTyped() {
         int userInput = 2;
-        when(input.hasNextInt()).thenReturn(true,false);
+        when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
@@ -99,7 +98,7 @@ class BibliotecaAppTest {
     @Test
     public void shouldDisplayTheEnterBookMessageWhenCheckoutOptionIsSelected() {
         int userInput = 3;
-        when(input.hasNextInt()).thenReturn(true,false);
+        when(input.hasNextInt()).thenReturn(true, false);
         when(input.nextInt()).thenReturn(userInput);
 
         bibliotecaApp.processUserInput();
@@ -112,11 +111,10 @@ class BibliotecaAppTest {
         int userInput1 = 3;
         String bookName = "Old man and the sea";
         int userInput2 = 1;
-        when(input.hasNextInt()).thenReturn(true,true,false);
+        when(input.hasNextInt()).thenReturn(true, true, false);
         when(input.hasNextLine()).thenReturn(true);
-        when(input.hasNext()).thenReturn(true);
-        when(input.nextLine()).thenReturn("\n",bookName);
-        when(input.nextInt()).thenReturn(userInput1,userInput2);
+        when(input.nextLine()).thenReturn("\n", bookName);
+        when(input.nextInt()).thenReturn(userInput1, userInput2);
 
         bibliotecaApp.processUserInput();
 

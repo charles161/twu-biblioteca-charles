@@ -15,11 +15,6 @@ public class InputWrapper implements Input {
     }
 
     @Override
-    public boolean hasNext() {
-        return scanner.hasNext();
-    }
-
-    @Override
     public String nextLine() {
         return scanner.nextLine();
     }

@@ -34,28 +34,6 @@ class InputWrapperTest {
     }
 
     @Test
-    void shouldReturnTrueWhenNextInputIsPresent() {
-        String userInput = "cool";
-        InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-        System.setIn(inputStream);
-
-        InputWrapper inputWrapper = new InputWrapper(new Scanner(System.in));
-
-        assertTrue(inputWrapper.hasNext());
-    }
-
-    @Test
-    void shouldReturnFalseWhenNextInputIsNotPresent() {
-        String userInput = "";
-        InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
-        System.setIn(inputStream);
-
-        InputWrapper inputWrapper = new InputWrapper(new Scanner(System.in));
-
-        assertFalse(inputWrapper.hasNext());
-    }
-
-    @Test
     void shouldReturnTheNextLineStringCool() {
         String userInput = "cool";
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
@@ -63,7 +41,7 @@ class InputWrapperTest {
 
         InputWrapper inputWrapper = new InputWrapper(new Scanner(System.in));
 
-        assertEquals(userInput,inputWrapper.nextLine());
+        assertEquals(userInput, inputWrapper.nextLine());
     }
 
     @Test
@@ -74,7 +52,7 @@ class InputWrapperTest {
 
         InputWrapper inputWrapper = new InputWrapper(new Scanner(System.in));
 
-        assertEquals(userInput,inputWrapper.nextLine());
+        assertEquals(userInput, inputWrapper.nextLine());
     }
 
     @Test
@@ -108,6 +86,6 @@ class InputWrapperTest {
         InputWrapper inputWrapper = new InputWrapper(new Scanner(System.in));
 
         int expectedInt = 1;
-        assertEquals(expectedInt,inputWrapper.nextInt());
+        assertEquals(expectedInt, inputWrapper.nextInt());
     }
 }

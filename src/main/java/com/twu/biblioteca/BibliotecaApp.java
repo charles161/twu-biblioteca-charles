@@ -15,7 +15,7 @@ public class BibliotecaApp {
     private static final String SUCCESSFUL_CHECKOUT_MESSAGE = "Thank you! Enjoy the book";
     private static final String UNSUCCESSFUL_CHECKOUT_MESSAGE = "Sorry, that book is not available";
     private static final String SUCCESSFUL_RETURN_MESSAGE = "Thank you for returning the book";
-    private static final String UNSUCCESSFUL_RETURN_MESSAGE = "Sorry, that book is not available";
+    private static final String UNSUCCESSFUL_RETURN_MESSAGE = "That is not a valid book to return.";
 
     private Printer printer;
     private Library library;
@@ -62,17 +62,16 @@ public class BibliotecaApp {
             public void onSelect() {
                 printer.printMessage(ENTER_BOOK_MESSAGE);
                 if (input.hasNextLine()) {
-                    if (input.hasNext()) {
-                        input.nextLine();
-                        String bookName = input.nextLine().replace("\n", "");
-                        try {
-                            library.checkout(bookName);
-                            printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
-                        } catch (BookNotAvailableException e) {
-                            printer.printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
-                        }
+                    input.nextLine();
+                    String bookName = input.nextLine().replace("\n", "");
+                    try {
+                        library.checkout(bookName);
+                        printer.printMessage(SUCCESSFUL_CHECKOUT_MESSAGE);
+                    } catch (BookNotAvailableException e) {
+                        printer.printMessage(UNSUCCESSFUL_CHECKOUT_MESSAGE);
                     }
                 }
+
             }
         });
         menuOptionMap.put(4, new MenuOption() {
@@ -85,15 +84,13 @@ public class BibliotecaApp {
             public void onSelect() {
                 printer.printMessage(ENTER_BOOK_MESSAGE);
                 if (input.hasNextLine()) {
-                    if (input.hasNext()) {
-                        input.nextLine();
-                        String bookName = input.nextLine().replace("\n", "");
-                        try {
-                            library.returnBook(bookName);
-                            printer.printMessage(SUCCESSFUL_RETURN_MESSAGE);
-                        } catch (BookNotAvailableException e) {
-                            printer.printMessage(UNSUCCESSFUL_RETURN_MESSAGE);
-                        }
+                    input.nextLine();
+                    String bookName = input.nextLine().replace("\n", "");
+                    try {
+                        library.returnBook(bookName);
+                        printer.printMessage(SUCCESSFUL_RETURN_MESSAGE);
+                    } catch (BookNotAvailableException e) {
+                        printer.printMessage(UNSUCCESSFUL_RETURN_MESSAGE);
                     }
                 }
             }
