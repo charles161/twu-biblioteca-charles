@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ConsoleInputReceiverReceiverTest {
+class ConsoleInputReceiverTest {
 
     @Test
     void shouldReturnTrueWhenNextLineIsPresent() {
@@ -16,7 +16,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         assertTrue(consoleInputReceiver.hasNextLine());
     }
@@ -27,7 +27,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         assertFalse(consoleInputReceiver.hasNextLine());
     }
@@ -38,7 +38,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         assertEquals(userInput, consoleInputReceiver.nextLine());
     }
@@ -49,7 +49,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         assertEquals(userInput, consoleInputReceiver.nextLine());
     }
@@ -60,7 +60,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         assertTrue(consoleInputReceiver.hasNextInt());
     }
@@ -71,7 +71,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         assertFalse(consoleInputReceiver.hasNextInt());
     }
@@ -82,7 +82,7 @@ class ConsoleInputReceiverReceiverTest {
         InputStream inputStream = new ByteArrayInputStream(userInput.getBytes());
         System.setIn(inputStream);
 
-        ConsoleInputReceiverReceiver consoleInputReceiver = new ConsoleInputReceiverReceiver(new Scanner(System.in));
+        ConsoleInputReceiver consoleInputReceiver = new ConsoleInputReceiver(new Scanner(System.in));
 
         int expectedInt = 1;
         assertEquals(expectedInt, consoleInputReceiver.nextInt());

@@ -160,7 +160,7 @@ public class BibliotecaApp {
         Movie movie1 = new Movie("3 idiots", 2009, "Rajkumar", 6);
         Movie movie2 = new Movie("The Chronicles of Narnia", 2005, "Andrew Adamson", 7);
         List<LibraryItem> itemList = new ArrayList<>(Arrays.asList(book1, book2, movie1, movie2));
-        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(itemList), new ConsoleInputReceiverReceiver(new Scanner(System.in)));
+        BibliotecaApp bibliotecaApp = new BibliotecaApp(new ConsolePrinter(), new Library(itemList), new ConsoleInputReceiver(new Scanner(System.in)));
         bibliotecaApp.displayGreeting();
         bibliotecaApp.displayMenu();
         bibliotecaApp.processUserInput();
